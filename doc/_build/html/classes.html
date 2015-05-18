@@ -1,0 +1,170 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Classes &mdash; bhp_visit 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="bhp_visit 1.0 documentation" href="index.html" />
+    <link rel="next" title="Models" href="models.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">bhp_visit 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-bhp_visit.classes">
+<span id="classes"></span><h1>Classes<a class="headerlink" href="#module-bhp_visit.classes" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bhp_visit.classes.window_period.WindowPeriod">
+<em class="property">class </em><tt class="descclassname">bhp_visit.classes.window_period.</tt><tt class="descname">WindowPeriod</tt><a class="reference internal" href="_modules/bhp_visit/classes/window_period.html#WindowPeriod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.window_period.WindowPeriod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class to manage an appointment&#8217;s or visit&#8217;s window period.</p>
+<p>An appointment datetime must fall within the date range determined by the lower and upper bounds set in the visit definition.</p>
+<dl class="method">
+<dt id="bhp_visit.classes.window_period.WindowPeriod.check_datetime">
+<tt class="descname">check_datetime</tt><big>(</big><em>visit_definition</em>, <em>new_datetime</em>, <em>reference_datetime</em><big>)</big><a class="reference internal" href="_modules/bhp_visit/classes/window_period.html#WindowPeriod.check_datetime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.window_period.WindowPeriod.check_datetime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if new_datetime is within the scheduled visit window period.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>reference_datetime: auto calculated / optimal timepoint datetime (best_appt_datetime)
+new_datetime: user suggested datetime.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bhp_visit.classes.visit_model_admin.VisitModelAdmin">
+<em class="property">class </em><tt class="descclassname">bhp_visit.classes.visit_model_admin.</tt><tt class="descname">VisitModelAdmin</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/bhp_visit/classes/visit_model_admin.html#VisitModelAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.visit_model_admin.VisitModelAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">bhp_common.models.my_model_admin.MyModelAdmin</span></tt></p>
+<p>ModelAdmin subclass for models with a ForeignKey to &#8216;visit&#8217;.</p>
+<p>Takes care of updating the bucket and redirecting back to the dashboard after
+delete()</p>
+<dl class="method">
+<dt id="bhp_visit.classes.visit_model_admin.VisitModelAdmin.delete_view">
+<tt class="descname">delete_view</tt><big>(</big><em>request</em>, <em>object_id</em>, <em>extra_context=None</em><big>)</big><a class="reference internal" href="_modules/bhp_visit/classes/visit_model_admin.html#VisitModelAdmin.delete_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.visit_model_admin.VisitModelAdmin.delete_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a reverse url. delete_view requires knowledge of the model which is not given, so get it from the form.__dict__ and reverse resolve</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bhp_visit.classes.visit_model_admin.VisitModelAdmin.save_model">
+<tt class="descname">save_model</tt><big>(</big><em>request</em>, <em>obj</em>, <em>form</em>, <em>change</em><big>)</big><a class="reference internal" href="_modules/bhp_visit/classes/visit_model_admin.html#VisitModelAdmin.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.visit_model_admin.VisitModelAdmin.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the scheduled entry bucket.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bhp_visit.classes.membership_form_helper.MembershipFormHelper">
+<em class="property">class </em><tt class="descclassname">bhp_visit.classes.membership_form_helper.</tt><tt class="descname">MembershipFormHelper</tt><a class="reference internal" href="_modules/bhp_visit/classes/membership_form_helper.html#MembershipFormHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.membership_form_helper.MembershipFormHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="bhp_visit.classes.membership_form_helper.MembershipFormHelper.codes_for_category">
+<tt class="descname">codes_for_category</tt><big>(</big><em>membership_form_category</em><big>)</big><a class="reference internal" href="_modules/bhp_visit/classes/membership_form_helper.html#MembershipFormHelper.codes_for_category"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bhp_visit.classes.membership_form_helper.MembershipFormHelper.codes_for_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists visit codes for this membership form category.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="next chapter">Models</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/classes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">bhp_visit 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, erik van widenfelt.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

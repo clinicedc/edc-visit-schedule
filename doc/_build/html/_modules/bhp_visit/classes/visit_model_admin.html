@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bhp_visit.classes.visit_model_admin &mdash; bhp_visit 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="bhp_visit 1.0 documentation" href="../../../index.html" />
+    <link rel="up" title="bhp_visit" href="../../bhp_visit.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">bhp_visit 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../bhp_visit.html" accesskey="U">bhp_visit</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for bhp_visit.classes.visit_model_admin</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">bhp_common.models</span> <span class="kn">import</span> <span class="n">MyModelAdmin</span>
+<span class="kn">from</span> <span class="nn">bhp_entry.models</span> <span class="kn">import</span> <span class="n">ScheduledEntryMetaData</span>
+
+
+<span class="c"># this is not used, see bhp_appointment</span>
+
+<div class="viewcode-block" id="VisitModelAdmin"><a class="viewcode-back" href="../../../classes.html#bhp_visit.classes.visit_model_admin.VisitModelAdmin">[docs]</a><span class="k">class</span> <span class="nc">VisitModelAdmin</span> <span class="p">(</span><span class="n">MyModelAdmin</span><span class="p">):</span>
+   
+    <span class="sd">&quot;&quot;&quot;ModelAdmin subclass for models with a ForeignKey to &#39;visit&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    Takes care of updating the bucket and redirecting back to the dashboard after</span>
+<span class="sd">    delete()</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        
+        <span class="nb">super</span><span class="p">(</span><span class="n">VisitModelAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_filter</span>
+
+<div class="viewcode-block" id="VisitModelAdmin.save_model"><a class="viewcode-back" href="../../../classes.html#bhp_visit.classes.visit_model_admin.VisitModelAdmin.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">change</span><span class="p">):</span>
+        
+        <span class="n">ScheduledEntryMetaData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">obj</span><span class="p">,</span>
+            <span class="n">subject_visit_model</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">visit</span><span class="p">,</span>
+            <span class="p">)</span>
+                        
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">VisitModelAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span>
+        </div>
+    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+
+        <span class="n">ScheduledEntryMetaData</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">obj</span><span class="p">,</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="s">&#39;delete&#39;</span><span class="p">,</span>
+            <span class="n">subject_visit_model</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">visit</span><span class="p">,</span>
+            <span class="p">)</span>
+            
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">VisitModelAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>        
+
+<div class="viewcode-block" id="VisitModelAdmin.delete_view"><a class="viewcode-back" href="../../../classes.html#bhp_visit.classes.visit_model_admin.VisitModelAdmin.delete_view">[docs]</a>    <span class="k">def</span> <span class="nf">delete_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">object_id</span><span class="p">,</span> <span class="n">extra_context</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot; get a reverse url. delete_view requires knowledge of the model which is not given, so get it from the form.__dict__ and reverse resolve&quot;&quot;&quot;</span>
+        <span class="c"># getting these two values this way works but seems a bit crazy ...</span>
+        <span class="c"># TODO: this cannot work</span>
+        <span class="n">subject_identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">object_id</span><span class="p">)</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">appointment</span><span class="o">.</span><span class="n">registered_subject</span><span class="o">.</span><span class="n">subject_identifier</span>
+        <span class="n">visit_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">object_id</span><span class="p">)</span><span class="o">.</span><span class="n">visit</span><span class="o">.</span><span class="n">appointment</span><span class="o">.</span><span class="n">visit_definition</span><span class="o">.</span><span class="n">code</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">VisitModelAdmin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">delete_view</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">object_id</span><span class="p">,</span> <span class="n">extra_context</span><span class="p">)</span>
+        
+        <span class="c"># hmmm. this is no good, need to get url_name from querystring</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;Location&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&#39;subject_dashboard_visit_url&#39;</span> <span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;dashboard_type&#39;</span><span class="p">:</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;dashboard_type&#39;</span><span class="p">),</span> <span class="s">&#39;subject_identifier&#39;</span><span class="p">:</span><span class="n">subject_identifier</span><span class="p">,</span> <span class="s">&#39;visit_code&#39;</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">visit_code</span><span class="p">)})</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">bhp_visit 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../bhp_visit.html" >bhp_visit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, erik van widenfelt.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
