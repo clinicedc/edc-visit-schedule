@@ -22,7 +22,7 @@ class MembershipFormHelper(object):
 
         Specify the registered_subject and the membership_form_category.
         """
-        ScheduleGroup = get_model('visit_schedule', 'ScheduleGroup')
+        ScheduleGroup = get_model('edc_visit_schedule', 'ScheduleGroup')
         extra_grouping_key = kwargs.get("exclude_others_if_keyed_model_name", None)
         self._set_keyed()
         self._set_unkeyed()
@@ -100,7 +100,7 @@ class MembershipFormHelper(object):
 
         Model class must have a key to registered_subject and may not be None."""
         self._model = None
-        ScheduleGroup = get_model('visit_schedule', 'ScheduleGroup')
+        ScheduleGroup = get_model('edc_visit_schedule', 'ScheduleGroup')
         if isinstance(schedule_group, ScheduleGroup):
             if not schedule_group.membership_form.content_type_map.model_class():
                 raise ImproperlyConfigured('Cannot get model class from content_type_map for schedule group \'{0}\' using \'{1}\'. Update content_type_map?'.format(schedule_group, schedule_group.membership_form))
@@ -123,8 +123,8 @@ class MembershipFormHelper(object):
 
         .. note:: category may be a string delimited by commas like 'subject, maternal' or just 'subject'. Below
                   the string values are converted to listed and concatenated into one unique list."""
-        MembershipForm = get_model('visit_schedule', 'MembershipForm')
-        ScheduleGroup = get_model('visit_schedule', 'ScheduleGroup')
+        MembershipForm = get_model('edc_visit_schedule', 'MembershipForm')
+        ScheduleGroup = get_model('edc_visit_schedule', 'ScheduleGroup')
         # convert MembershipForm category field values into a unique list
         categories = list(set([y.strip() for y in list(itertools.chain(*[m['category'].split(',') for m in MembershipForm.objects.values('category').order_by('category').distinct()]))]))
         if category not in categories:

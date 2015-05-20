@@ -5,7 +5,7 @@ from django.db import models
 from edc.base.model.models import BaseUuidModel
 from edc.core.bhp_content_type_map.models import ContentTypeMap
 
-from ..managers import MembershipFormManager
+from edc_visit_schedule import MembershipFormManager
 
 
 class MembershipForm(BaseUuidModel):
@@ -62,5 +62,5 @@ class MembershipForm(BaseUuidModel):
         return self.content_type_map.name
 
     class Meta:
-        app_label = "visit_schedule"
+        app_label = "edc_visit_schedule"
         db_table = 'bhp_visit_membershipform'

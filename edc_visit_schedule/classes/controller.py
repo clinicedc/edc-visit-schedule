@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.importlib import import_module
 from django.utils.module_loading import module_has_submodule
 
-from .visit_schedule_configuration import VisitScheduleConfiguration
+from edc_visit_schedule_configuration import VisitScheduleConfiguration
 
 
 class AlreadyRegistered(Exception):
@@ -59,15 +59,15 @@ class Controller(object):
         self.set_registry(visit_schedule_configuration)
 
     def autodiscover(self):
-        """ Autodiscover visit_schedule modules."""
+        """ Autodiscover edc_visit_schedule modules."""
         for app in settings.INSTALLED_APPS:
             mod = import_module(app)
             try:
                 before_import_registry = copy.copy(site_visit_schedules._registry)
-                import_module('%s.visit_schedule' % app)
+                import_module('%s.edc_visit_schedule' % app)
             except ImportError:
                 site_visit_schedules._registry = before_import_registry
-                if module_has_submodule(mod, 'visit_schedule'):
+                if module_has_submodule(mod, 'edc_visit_schedule'):
                     raise
 
 site_visit_schedules = Controller()

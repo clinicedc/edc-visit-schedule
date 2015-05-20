@@ -6,11 +6,11 @@ from django.db import models
 
 from edc.core.bhp_content_type_map.models import ContentTypeMap
 
-from ..managers import VisitDefinitionManager
-from ..models import BaseWindowPeriodItem
-from ..models import ScheduleGroup
-from ..utils import get_lower_window_days, get_upper_window_days
-from ..validators import is_visit_tracking_model
+from edc_visit_schedule import VisitDefinitionManager
+from edc_visit_schedule import BaseWindowPeriodItem
+from edc_visit_schedule import ScheduleGroup
+from edc_visit_schedule import get_lower_window_days, get_upper_window_days
+from edc_visit_schedule import is_visit_tracking_model
 
 
 class VisitDefinition(BaseWindowPeriodItem):
@@ -63,5 +63,5 @@ class VisitDefinition(BaseWindowPeriodItem):
 
     class Meta:
         ordering = ['code', 'time_point']
-        app_label = "visit_schedule"
+        app_label = "edc_visit_schedule"
         db_table = 'bhp_visit_visitdefinition'

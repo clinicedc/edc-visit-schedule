@@ -1,8 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from edc.base.model.models import BaseUuidModel
-from ..models import MembershipForm
-from ..managers import ScheduleGroupManager
+from edc_visit_schedule import MembershipForm
+from edc_visit_schedule import ScheduleGroupManager
 
 
 class ScheduleGroup(BaseUuidModel):
@@ -41,5 +41,5 @@ class ScheduleGroup(BaseUuidModel):
 
     class Meta:
         ordering = ['group_name']
-        app_label = "visit_schedule"
+        app_label = "edc_visit_schedule"
         db_table = 'bhp_visit_schedulegroup'
