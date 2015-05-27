@@ -1,0 +1,5 @@
+Django==1.8.2
+django-extensions==1.5.5
+Unipath==1.1
+-e git+https://github.com/botswana-harvard/edc-base@develop#egg=edc-base
+-e git+https://github.com/botswana-harvard/edc-entry@develop#egg=edc-entry
