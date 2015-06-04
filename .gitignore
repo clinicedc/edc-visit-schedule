@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 .project
 .pydevproject
-
+test-*
 # C extensions
 *.so
 
