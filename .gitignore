@@ -1,12 +1,14 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-.project
-.pydevproject
-test-*
+
 # C extensions
 *.so
-
+.pydevproject
+.project
+.settings
+test-*
+edc_death_report/db.sqlite3
 # Distribution / packaging
 .Python
 env/
