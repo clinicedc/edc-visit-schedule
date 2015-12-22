@@ -1,6 +1,6 @@
 from django import forms
 
-from edc.base.form.forms import BaseModelForm
+from edc_base.form.forms import BaseModelForm
 from edc_appointment.models import Appointment, AppointmentMixin
 
 

@@ -1,6 +1,6 @@
-import itertools
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
+
 from edc_base.model.models import BaseModel
 
 
@@ -15,7 +15,8 @@ class MembershipFormHelper(object):
 
     def get_membership_models_for(self, registered_subject, membership_form_category, **kwargs):
 
-        """ Returns dict of keyed model instances and unkeyed model classes or "membership forms" for a given registered_subject.
+        """ Returns dict of keyed model instances and unkeyed model
+        classes or "membership forms" for a given registered_subject.
 
         Specify the registered_subject and the membership_form_category.
         """
@@ -103,13 +104,19 @@ class MembershipFormHelper(object):
         ScheduleGroup = models.get_model('visit_schedule', 'ScheduleGroup')
         if isinstance(schedule_group, ScheduleGroup):
             if not schedule_group.membership_form.content_type_map.model_class():
-                raise ImproperlyConfigured('Cannot get model class from content_type_map for schedule group \'{0}\' using \'{1}\'. Update content_type_map?'.format(schedule_group, schedule_group.membership_form))
+                raise ImproperlyConfigured(
+                    'Cannot get model class from content_type_map for schedule group \'{0}\' '
+                    'using \'{1}\'. Update content_type_map?'.format(
+                        schedule_group, schedule_group.membership_form))
             else:
                 self._model = schedule_group.membership_form.content_type_map.model_class()
         if isinstance(cls, BaseModel):
             self._model = cls
         if 'registered_subject' not in dir(self._model):
-            raise ImproperlyConfigured('Model require attribute \'registered_subject\'. Model \'%s\' does not have this attribute but is listed as a membership form.' % schedule_group.membership_form.content_type_map.name)
+            raise ImproperlyConfigured(
+                'Model require attribute \'registered_subject\'. Model \'%s\' does not have '
+                'this attribute but is listed as a membership form.'.format(
+                    schedule_group.membership_form.content_type_map.name))
         if not self._model:
             raise TypeError('Attribute _model may not be None.')
 
@@ -121,18 +128,30 @@ class MembershipFormHelper(object):
     def _is_configured_for_category(self, category=None):
         """Confirms membership forms exist for this category.
 
-        .. note:: category may be a string delimited by commas like 'subject, maternal' or just 'subject'. Below
-                  the string values are converted to listed and concatenated into one unique list."""
+        .. note:: category may be a string delimited by commas like
+            'subject, maternal' or just 'subject'. Below
+            the string values are converted to listed and concatenated into one unique list."""
         MembershipForm = models.get_model('visit_schedule', 'MembershipForm')
         ScheduleGroup = models.get_model('visit_schedule', 'ScheduleGroup')
         # convert MembershipForm category field values into a unique list
-        categories = list(set([y.strip() for y in list(itertools.chain(*[m['category'].split(',') for m in MembershipForm.objects.values('category').order_by('category').distinct()]))]))
-        if not category in categories:
-            raise ImproperlyConfigured('Can\'t find any membership forms! Have you configured any for category \'{0}\'. Must be one of {1}.'.format(category, [m['category'] for m in MembershipForm.objects.values('category').order_by('category').distinct()]))
+        categories = []
+        for membership_form in MembershipForm.objects.all():
+            for item in membership_form.category.split(','):
+                categories.append(item.strip())
+        categories = list(set(categories))
+        if category not in categories:
+            raise ImproperlyConfigured(
+                'Can\'t find any membership forms! Have you configured any for category'
+                ' \'{0}\'. Must be one of {1}.'.format(
+                    category, categories))
         # convert ScheduleGroup category field values into a unique list
-        categories = list(set([y.strip() for y in list(itertools.chain(*[m['membership_form__category'].split(',') for m in ScheduleGroup.objects.values('membership_form__category').order_by('membership_form__category').distinct()]))]))
-        if not category in categories:
-            raise ImproperlyConfigured('Can\'t find any schedule groups! Have you configured any for category \'{0}\'.'.format(category))
+        for scheduled_group in ScheduleGroup.objects.all():
+            for item in scheduled_group.membership_form.category.split(','):
+                categories.append(item.strip())
+        categories = list(set(categories))
+        if category not in categories:
+            raise ImproperlyConfigured(
+                'Can\'t find any schedule groups! Have you configured any for category \'{0}\'.'.format(category))
         return True
 
     def _remove_unkeyed_by_grouping_key(self):

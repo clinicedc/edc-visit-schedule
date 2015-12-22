@@ -1,14 +1,18 @@
 from django.contrib import admin
+
 from edc_base.modeladmin.admin import BaseModelAdmin
-from ..models import MembershipForm
+
 from ..forms import MembershipFormForm
+from ..models import MembershipForm
 
 
 class MembershipFormAdmin (BaseModelAdmin):
 
     form = MembershipFormForm
 
-    list_display = ('content_type_map', 'category', 'visible', 'user_created', 'user_modified', 'created', 'modified')
+    list_display = (
+        'content_type_map', 'category', 'visible', 'user_created',
+        'user_modified', 'created', 'modified')
 
     list_filter = ('category',)
 

@@ -4,7 +4,8 @@ from dateutil.relativedelta import relativedelta
 class WindowPeriod(object):
     """Class to manage an appointment's or visit's window period.
 
-    An appointment datetime must fall within the date range determined by the lower and upper bounds set in the visit definition.
+    An appointment datetime must fall within the date range
+    determined by the lower and upper bounds set in the visit definition.
     """
     def __init__(self):
         self.error = None
@@ -22,13 +23,16 @@ class WindowPeriod(object):
         diff = 0  # always in days for now
         retval = True
         if not reference_datetime:
-            raise TypeError('Parameter \'reference_datetime\' cannot be None. Is appointment.best_appt_datetime = None?')
+            raise TypeError(
+                'Parameter \'reference_datetime\' cannot be None. Is appointment.best_appt_datetime = None?')
         # calculate the actual datetime for the window's upper and lower boundary relative to new_appt_datetime
         rdelta = relativedelta()
-        setattr(rdelta, visit_definition.get_rdelta_attrname(visit_definition.upper_window_unit), visit_definition.upper_window)
+        setattr(rdelta, visit_definition.get_rdelta_attrname(
+            visit_definition.upper_window_unit), visit_definition.upper_window)
         upper_window_datetime = reference_datetime + rdelta
         rdelta = relativedelta()
-        setattr(rdelta, visit_definition.get_rdelta_attrname(visit_definition.lower_window_unit), visit_definition.lower_window)
+        setattr(rdelta, visit_definition.get_rdelta_attrname(
+            visit_definition.lower_window_unit), visit_definition.lower_window)
         lower_window_datetime = reference_datetime - rdelta
         # count the timedelta between window's datetime and new appt datetime
         upper_td = new_datetime - upper_window_datetime
@@ -61,12 +65,13 @@ class WindowPeriod(object):
             diff = td_from_boundary.days  # TODO: this cannot be in days if unit is Hours
             retval = False
             self.error = True
-            self.error_message = ('Datetime is out of {window_name} window period. Expected a datetime between {lower} and {upper}.'
-                            'Window allows {window_value} {unit}. Got {diff}.'.format(
-                                lower=lower_window_datetime,
-                                upper=upper_window_datetime,
-                                window_name=window_name,
-                                window_value=window_value,
-                                unit=unit,
-                                diff=diff))
+            self.error_message = (
+                'Datetime is out of {window_name} window period. Expected a datetime between {lower} and {upper}.'
+                'Window allows {window_value} {unit}. Got {diff}.'.format(
+                    lower=lower_window_datetime,
+                    upper=upper_window_datetime,
+                    window_name=window_name,
+                    window_value=window_value,
+                    unit=unit,
+                    diff=diff))
         return retval
