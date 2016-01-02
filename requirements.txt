@@ -25,11 +25,7 @@ git+https://github.com/botswana-harvard/edc-lab@develop#egg=edc-lab
 git+https://github.com/botswana-harvard/edc-meta-data@develop#egg=edc-meta-data
 git+https://github.com/botswana-harvard/edc-quota@develop#egg=edc-quota
 git+https://github.com/botswana-harvard/edc-registration@develop#egg=edc-registration
-<<<<<<< HEAD
 git+https://github.com/botswana-harvard/edc-rule-groups@develop#egg=edc-rule_groups
-=======
-git+https://github.com/botswana-harvard/edc-rule_groups@develop#egg=edc-rule-groups
->>>>>>> 2b72b7d31c0a11d4c60245e3ea21abb9e975812d
 git+https://github.com/botswana-harvard/edc-sync@develop#egg=edc-sync
 git+https://github.com/botswana-harvard/edc-testing@develop#egg=edc-testing
 git+https://github.com/botswana-harvard/edc-visit-tracking@develop#egg=edc-visit-tracking
