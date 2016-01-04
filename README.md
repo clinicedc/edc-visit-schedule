@@ -23,13 +23,13 @@ __edc-visit-schedule__ takes over once the informed consent process is complete.
 The module defines:
  
  - visits (model VisitDefinition)
- - data collection schedule (ScheduleGroup)
+ - data collection schedule (Schedule)
  - a model that registers a participant to a data collection schedule (Member)
  
  Model class "Member" through content_type points to a model/form to be
  completed by the participant. If the model/form saves successfully, the
  participant is considered a member of the schedule group. Scheduled
  appointments will be created for all visits defined in the VisitDefinitions
- associated with the ScheduleGroup.
+ associated with the Schedule.
  
  Appointments are part of __edc-appointment__.   
