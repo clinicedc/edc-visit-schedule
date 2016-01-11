@@ -44,8 +44,8 @@ install:
 
 before_script:
   - flake8 edc_visit_schedule
-  - mysql -e 'create database edc;'
-  - mysql -e 'create database edc_lab;'
+  - mysql -e 'create database edc CHARACTER SET utf8;;'
+  - mysql -e 'create database edc_lab CHARACTER SET utf8;;'
 
 script: 
   - coverage run --source=edc_visit_schedule manage.py test
