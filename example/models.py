@@ -69,6 +69,82 @@ class CrfTwo(CrfModelMixin, BaseUuidModel):
         app_label = 'example'
 
 
+class CrfThree(CrfModelMixin, BaseUuidModel):
+
+    subject_visit = models.ForeignKey(SubjectVisit)
+
+    f1 = models.CharField(max_length=10, default='erik')
+
+    entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+
+    class Meta:
+        app_label = 'example'
+
+
+class CrfFour(CrfModelMixin, BaseUuidModel):
+
+    subject_visit = models.ForeignKey(SubjectVisit)
+
+    f1 = models.CharField(max_length=10, default='erik')
+
+    entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+
+    class Meta:
+        app_label = 'example'
+
+
+class CrfFive(CrfModelMixin, BaseUuidModel):
+
+    subject_visit = models.ForeignKey(SubjectVisit)
+
+    f1 = models.CharField(max_length=10, default='erik')
+
+    entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+
+    class Meta:
+        app_label = 'example'
+
+
+class CrfSix(CrfModelMixin, BaseUuidModel):
+
+    subject_visit = models.ForeignKey(SubjectVisit)
+
+    f1 = models.CharField(max_length=10, default='erik')
+
+    entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+
+    class Meta:
+        app_label = 'example'
+
+
+class RequisitionOne(CrfModelMixin, BaseUuidModel):
+
+    subject_visit = models.ForeignKey(SubjectVisit)
+
+    panel_name = models.CharField(max_length=25, null=True)
+
+    f1 = models.CharField(max_length=10, default='erik')
+
+    entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+
+    class Meta:
+        app_label = 'example'
+
+
+class RequisitionTwo(CrfModelMixin, BaseUuidModel):
+
+    subject_visit = models.ForeignKey(SubjectVisit)
+
+    panel_name = models.CharField(max_length=25, null=True)
+
+    f1 = models.CharField(max_length=10, default='erik')
+
+    entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+
+    class Meta:
+        app_label = 'example'
+
+
 class CrfMetaData(CrfMetaDataModelMixin, BaseUuidModel):
 
     registered_subject = models.ForeignKey(RegisteredSubject)
