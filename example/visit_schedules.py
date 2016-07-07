@@ -24,6 +24,7 @@ requisitions = (
 example_visit_schedule = VisitSchedule(
     name='Example Visit Schedule',
     app_label='example',
+    visit_model=SubjectVisit,
 )
 
 # add schedules
@@ -39,7 +40,6 @@ example_visit_schedule.add_visit(
     schedule_name='schedule-1',
     time_point=0,
     base_interval=0,
-    visit_model=SubjectVisit,
     requisitions=requisitions,
     crfs=crfs)
 example_visit_schedule.add_visit(
@@ -48,7 +48,6 @@ example_visit_schedule.add_visit(
     schedule_name='schedule-1',
     time_point=1,
     base_interval=1,
-    visit_model=SubjectVisit,
     requisitions=requisitions,
     crfs=crfs)
 
