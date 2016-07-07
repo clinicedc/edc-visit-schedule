@@ -1,6 +1,7 @@
 from django.db import models
 
-from edc_appointment.mixins import AppointmentModelMixin, AppointmentMixin
+from edc_appointment.model_mixins import AppointmentModelMixin
+from edc_appointment.appointment_mixin import AppointmentMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_meta_data.crf_meta_data_managers import CrfMetaDataManager
 from edc_meta_data.crf_meta_data_mixin import CrfMetaDataMixin
