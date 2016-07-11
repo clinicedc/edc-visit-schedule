@@ -1,4 +1,5 @@
 from django.db import models
+from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 
 from edc_base.model.models import BaseModel
@@ -20,7 +21,7 @@ class MembershipFormHelper(object):
 
         Specify the registered_subject and the membership_form_category.
         """
-        Schedule = models.get_model('edc_visit_schedule', 'Schedule')
+        Schedule = apps.get_model('edc_visit_schedule', 'Schedule')
         extra_grouping_key = kwargs.get("exclude_others_if_keyed_model_name", None)
         self._set_keyed()
         self._set_unkeyed()
@@ -48,7 +49,7 @@ class MembershipFormHelper(object):
         from edc_appointment.models import AppointmentMixin
         if not group:
             group = 'no_group'
-        if not isinstance(group, basestring):
+        if not isinstance(group, str):
             raise TypeError('Expected parameter group to be a string')
         if not isinstance(obj, AppointmentMixin):
             raise TypeError('Expected an instance of AppointmentMixin. Models {0} of group \'{1}\' is being '
@@ -66,7 +67,7 @@ class MembershipFormHelper(object):
         from edc_appointment.models import AppointmentMixin
         if not group:
             group = 'no_group'
-        if not isinstance(group, basestring):
+        if not isinstance(group, str):
             raise TypeError('Expected parameter group to be a string')
         if not issubclass(cls, AppointmentMixin):
             raise TypeError('Expected a model class using mixin AppointmentMixin')
@@ -101,7 +102,7 @@ class MembershipFormHelper(object):
 
         Model class must have a key to registered_subject and may not be None."""
         self._model = None
-        Schedule = models.get_model('edc_visit_schedule', 'Schedule')
+        Schedule = apps.get_model('edc_visit_schedule', 'Schedule')
         if isinstance(schedule, Schedule):
             if not schedule.membership_form.content_type_map.model_class():
                 raise ImproperlyConfigured(
@@ -131,8 +132,8 @@ class MembershipFormHelper(object):
         .. note:: category may be a string delimited by commas like
             'subject, maternal' or just 'subject'. Below
             the string values are converted to listed and concatenated into one unique list."""
-        MembershipForm = models.get_model('edc_visit_schedule', 'MembershipForm')
-        Schedule = models.get_model('edc_visit_schedule', 'Schedule')
+        MembershipForm = apps.get_model('edc_visit_schedule', 'MembershipForm')
+        Schedule = apps.get_model('edc_visit_schedule', 'Schedule')
         # convert MembershipForm category field values into a unique list
         categories = []
         for membership_form in MembershipForm.objects.all():
@@ -163,22 +164,22 @@ class MembershipFormHelper(object):
     def _remove_unkeyed_by_extra_grouping_key(self, extra_grouping_key):
         """Removes from unkeyed if the unkeyed object name startswith string extra_grouping_key."""
         if extra_grouping_key:
-            for inst in self._get_keyed().itervalues():
+            for inst in self._get_keyed().values():
                 if inst._meta.object_name.lower() == extra_grouping_key:
-                    for grouping_key, cls in self._get_unkeyed().iteritems():
+                    for grouping_key, cls in self._get_unkeyed().items():
                         if cls._meta.object_name.lower().startswith(extra_grouping_key):
                             del self._get_unkeyed()[grouping_key]
 
     def _format_for_return(self):
         keyed = []
-        for inst in [inst for inst in self._get_keyed().itervalues()]:
+        for inst in [inst for inst in self._get_keyed().values()]:
             if isinstance(inst, list):
                 for i in inst:
                     keyed.append(i)
             else:
                 keyed.append(inst)
         unkeyed = []
-        for cls in [cls for cls in self._get_unkeyed().itervalues()]:
+        for cls in [cls for cls in self._get_unkeyed().values()]:
             if isinstance(cls, list):
                 for c in cls:
                     unkeyed.append(c)

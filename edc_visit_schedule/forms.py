@@ -1,6 +1,6 @@
 from django import forms
 
-from edc_base.form.forms import BaseModelForm
+from edc_base.form.old_forms import BaseModelForm
 from edc_appointment.models import Appointment, AppointmentMixin
 
 
@@ -8,6 +8,7 @@ class MembershipFormForm(BaseModelForm):
 
     class Meta:
         model = Appointment
+        fields = '__all__'
 
     def clean(self):
         cleaned_data = self.cleaned_data
