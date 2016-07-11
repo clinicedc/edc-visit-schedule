@@ -1,1 +1,2 @@
 include AUTHORS CHANGES README.md LICENCE
+include edc_visit_schedule/templates *
