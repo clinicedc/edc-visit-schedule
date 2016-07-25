@@ -8,6 +8,7 @@ from edc_visit_schedule.apps import EdcVisitScheduleAppConfig as EdcVisitSchedul
 
 class ExampleAppConfig(AppConfig):
     name = 'example'
+    institution = 'BHP'
 
 
 class EdcVisitScheduleAppConfig(EdcVisitScheduleAppConfigParent):
