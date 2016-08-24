@@ -4,11 +4,9 @@ from edc_appointment.model_mixins import AppointmentModelMixin
 from edc_appointment.appointment_mixin import AppointmentMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_meta_data.crf_meta_data_managers import CrfMetaDataManager
-from edc_meta_data.crf_meta_data_mixin import CrfMetaDataMixin
+from edc_meta_data.mixins import CrfMetaDataMixin
 from edc_registration.models import RegisteredSubjectModelMixin
-from edc_visit_tracking.models.crf_model_mixin import CrfModelMixin
-from edc_visit_tracking.models.previous_visit_mixin import PreviousVisitMixin
-from edc_visit_tracking.models.visit_model_mixin import VisitModelMixin
+from edc_visit_tracking.model_mixins import CrfModelMixin, PreviousVisitModelMixin, VisitModelMixin
 from edc_meta_data.model_mixins import CrfMetaDataModelMixin, RequisitionMetaDataModelMixin
 from edc_consent.models.base_consent import BaseConsent
 from edc_consent.models.fields.bw.identity_fields_mixin import IdentityFieldsMixin
@@ -38,7 +36,7 @@ class Appointment(AppointmentModelMixin, BaseUuidModel):
         app_label = 'example'
 
 
-class SubjectVisit(CrfMetaDataMixin, PreviousVisitMixin, VisitModelMixin, BaseUuidModel):
+class SubjectVisit(CrfMetaDataMixin, PreviousVisitModelMixin, VisitModelMixin, BaseUuidModel):
 
     appointment = models.OneToOneField(Appointment)
 
