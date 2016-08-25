@@ -2,7 +2,7 @@ from django.apps import apps as django_apps
 from django.core.exceptions import ImproperlyConfigured
 
 
-class MembershipFormHelper(object):
+class ScheduleEnrollment(object):
 
     def __init__(self, *args, **kwargs):
         self._keyed = None
@@ -11,19 +11,19 @@ class MembershipFormHelper(object):
         self._category = None
         self._model = None
 
-    def get_membership_models_for(self, registered_subject, membership_form_category, **kwargs):
+    def get_schedule_enrollment_models_for(self, registered_subject, category, **kwargs):
 
         """ Returns dict of keyed model instances and unkeyed model
         classes or "membership forms" for a given registered_subject.
 
-        Specify the registered_subject and the membership_form_category.
+        Specify the registered_subject and the schedule_enrollment_model_category.
         """
         Schedule = django_apps.get_model('edc_visit_schedule', 'Schedule')
         extra_grouping_key = kwargs.get("exclude_others_if_keyed_model_name", None)
         self._set_keyed()
         self._set_unkeyed()
-        self._set_category(membership_form_category)
-        for schedule in Schedule.objects.filter(membership_form__category__iexact=self._get_category()):
+        self._set_category(category)
+        for schedule in Schedule.objects.filter(schedule_enrollment_model__category__iexact=self._get_category()):
             self._set_model(schedule=schedule)
             if self._get_model().objects.filter(registered_subject_id=registered_subject.pk).exists():
                 for obj in self._get_model().objects.filter(registered_subject_id=registered_subject.pk):
@@ -101,20 +101,20 @@ class MembershipFormHelper(object):
         self._model = None
         Schedule = django_apps.get_model('edc_visit_schedule', 'Schedule')
         if isinstance(schedule, Schedule):
-            if not schedule.membership_form.content_type_map.model_class():
+            if not schedule.schedule_enrollment_model.content_type_map.model_class():
                 raise ImproperlyConfigured(
                     'Cannot get model class from content_type_map for schedule group \'{0}\' '
                     'using \'{1}\'. Update content_type_map?'.format(
-                        schedule, schedule.membership_form))
+                        schedule, schedule.schedule_enrollment_model))
             else:
-                self._model = schedule.membership_form.content_type_map.model_class()
+                self._model = schedule.schedule_enrollment_model.content_type_map.model_class()
         if isinstance(cls, BaseModel):
             self._model = cls
         if 'registered_subject' not in dir(self._model):
             raise ImproperlyConfigured(
                 'Model require attribute \'registered_subject\'. Model \'%s\' does not have '
                 'this attribute but is listed as a membership form.'.format(
-                    schedule.membership_form.content_type_map.name))
+                    schedule.schedule_enrollment_model.content_type_map.name))
         if not self._model:
             raise TypeError('Attribute _model may not be None.')
 
@@ -129,12 +129,12 @@ class MembershipFormHelper(object):
         .. note:: category may be a string delimited by commas like
             'subject, maternal' or just 'subject'. Below
             the string values are converted to listed and concatenated into one unique list."""
-        MembershipForm = django_apps.get_model('edc_visit_schedule', 'MembershipForm')
+        ScheduleEnrollmentModel = django_apps.get_model('edc_visit_schedule', 'MembershipForm')
         Schedule = django_apps.get_model('edc_visit_schedule', 'Schedule')
         # convert MembershipForm category field values into a unique list
         categories = []
-        for membership_form in MembershipForm.objects.all():
-            for item in membership_form.category.split(','):
+        for schedule_enrollment_model in ScheduleEnrollmentModel.objects.all():
+            for item in schedule_enrollment_model.category.split(','):
                 categories.append(item.strip())
         categories = list(set(categories))
         if category not in categories:
@@ -144,7 +144,7 @@ class MembershipFormHelper(object):
                     category, categories))
         # convert Schedule category field values into a unique list
         for scheduled_group in Schedule.objects.all():
-            for item in scheduled_group.membership_form.category.split(','):
+            for item in scheduled_group.schedule_enrollment_model.category.split(','):
                 categories.append(item.strip())
         categories = list(set(categories))
         if category not in categories:

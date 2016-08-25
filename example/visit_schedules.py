@@ -3,6 +3,7 @@ from example.models import SubjectVisit, SubjectConsent
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from edc_visit_schedule.visit_schedule import VisitSchedule
 from edc_visit_schedule.visit import Crf, Requisition
+from edc_visit_schedule.schedule import Schedule
 
 crfs = (
     Crf(show_order=10, app_label='example', model_name='CrfOne'),
@@ -21,35 +22,33 @@ requisitions = (
         panel_name='Viral Load', panel_type='TEST', aliqout_type_alpha_code='WB'),
 )
 
-example_visit_schedule = VisitSchedule(
-    name='Example Visit Schedule',
+subject_visit_schedule = VisitSchedule(
+    name='subject_visit_schedule',
+    verbose_name='Example Visit Schedule',
     app_label='example',
     visit_model=SubjectVisit,
 )
 
 # add schedules
-example_visit_schedule.add_schedule(schedule_name='schedule-1', grouping_key='schedule-1')
-
-# add membership form for this schedule
-example_visit_schedule.add_membership_form(schedule_name='schedule-1', model=SubjectConsent, visible=True)
+schedule = Schedule(name='schedule-1', enrollment_model=SubjectConsent)
 
 # add visits to this schedule
-example_visit_schedule.add_visit(
+schedule.add_visit(
     code='1000',
     title='Visit 1000',
-    schedule_name='schedule-1',
-    time_point=0,
+    timepoint=0,
     base_interval=0,
     requisitions=requisitions,
     crfs=crfs)
-example_visit_schedule.add_visit(
+schedule.add_visit(
     code='2000',
     title='Visit 2000',
-    schedule_name='schedule-1',
-    time_point=1,
+    timepoint=1,
     base_interval=1,
     requisitions=requisitions,
     crfs=crfs)
 
+schedule = subject_visit_schedule.add_schedule(schedule)
+
 # register the visit_schedule
-site_visit_schedules.register(example_visit_schedule)
+site_visit_schedules.register(subject_visit_schedule)

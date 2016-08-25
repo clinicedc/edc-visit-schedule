@@ -1,14 +1,13 @@
 from django.db import models
 
-from edc_appointment.model_mixins import AppointmentModelMixin
-from edc_appointment.appointment_mixin import AppointmentMixin
+from edc_appointment.model_mixins import AppointmentModelMixin, CreateAppointmentsMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_meta_data.crf_meta_data_managers import CrfMetaDataManager
+from edc_meta_data.managers import CrfMetaDataManager
 from edc_meta_data.mixins import CrfMetaDataMixin
-from edc_registration.models import RegisteredSubjectModelMixin
+from edc_registration.model_mixins import RegisteredSubjectModelMixin
 from edc_visit_tracking.model_mixins import CrfModelMixin, PreviousVisitModelMixin, VisitModelMixin
 from edc_meta_data.model_mixins import CrfMetaDataModelMixin, RequisitionMetaDataModelMixin
-from edc_consent.models.base_consent import BaseConsent
+from edc_consent.model_mixins import ConsentModelMixin
 from edc_consent.models.fields.bw.identity_fields_mixin import IdentityFieldsMixin
 from edc_consent.models.fields import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
 
@@ -19,7 +18,7 @@ class RegisteredSubject(RegisteredSubjectModelMixin, BaseUuidModel):
         app_label = 'example'
 
 
-class SubjectConsent(BaseConsent, AppointmentMixin, IdentityFieldsMixin, ReviewFieldsMixin,
+class SubjectConsent(ConsentModelMixin, CreateAppointmentsMixin, IdentityFieldsMixin, ReviewFieldsMixin,
                      PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
     registered_subject = models.ForeignKey(RegisteredSubject)

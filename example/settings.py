@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_crypto_fields.apps.DjangoCryptoFieldsAppConfig',
-    'edc_base',
+    'django_crypto_fields.apps.AppConfig',
+    'edc_protocol.apps.AppConfig',
+    'edc_base.apps.AppConfig',
+    'edc_appointment.apps.AppConfig',
     'example.apps.EdcConsentAppConfig',
     'example.apps.ExampleAppConfig'
 ]

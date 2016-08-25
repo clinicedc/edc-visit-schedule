@@ -1,14 +1,13 @@
-from django.apps.config import AppConfig
-
-from edc_consent.apps import EdcConsentAppConfig as EdcConsentAppConfigParent
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from edc_visit_schedule.apps import EdcVisitScheduleAppConfig as EdcVisitScheduleAppConfigParent
+from django.apps.config import AppConfig as DjangoAppConfig
+
+from edc_consent.apps import AppConfig as EdcConsentAppConfigParent
+from edc_visit_schedule.apps import AppConfig as EdcVisitScheduleAppConfigParent
 
 
-class ExampleAppConfig(AppConfig):
+class AppConfig(DjangoAppConfig):
     name = 'example'
-    institution = 'BHP'
 
 
 class EdcVisitScheduleAppConfig(EdcVisitScheduleAppConfigParent):
