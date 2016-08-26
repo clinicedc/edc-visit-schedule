@@ -11,7 +11,8 @@ A `Visit Schedule` lives in your app in the module `visit_schedules`. Each app c
 
 A `VisitSchedule` contains `Schedules` which contain `Visits` which contain `Crfs` and `Requisitions`.
 
-A subject is enrolled to a schedule by an enrollment model. In the example below we use the informed consent, `SubjectConsent`.
+A subject is enrolled to a schedule by an enrollment model. In the example below we use model `Enrollment`.
+
 
 See the example app for the complete code.
 
@@ -19,7 +20,7 @@ First, create a file `visit_schedules.py` in the root of your app where the code
 
 Next, declare lists of `Crfs` and `Requisitions` to be completed during each visit. In this case we assume that every visit has the same data collection requirement.
 
-    from example.models import SubjectVisit, SubjectConsent
+    from example.models import SubjectVisit, Enrollment
 
     from edc_visit_schedule.site_visit_schedules import site_visit_schedules
     from edc_visit_schedule.visit_schedule import VisitSchedule
@@ -46,7 +47,7 @@ Next, declare lists of `Crfs` and `Requisitions` to be completed during each vis
 
 Create a schedule:
 
-    schedule = Schedule(name='schedule-1', enrollment_model=SubjectConsent)
+    schedule = Schedule(name='schedule-1', enrollment_model=Enrollment)
 
 Add visits to the `schedule`:
 
@@ -84,4 +85,4 @@ Register the visit schedule with the site registry:
 
 When Django loads, the visit schedule class will be available in the global `site_visit_schedules`.
 
-Note that the `schedule` above was declared with the enrollment model `SubjectConsent`. An enrollment model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `subject_consent.save()` the method `subject_consent.prepare_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule.
+Note that the `schedule` above was declared with the enrollment model `Enrollment`. An enrollment model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `enrollment.save()` the method `enrollment.create_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule.
