@@ -29,11 +29,11 @@ Next, declare lists of `Crfs` and `Requisitions` to be completed during each vis
     
     
     crfs = (
-        Crf(show_order=10, app_label='example', model_name='CrfOne'),
-        Crf(show_order=20, app_label='example', model_name='CrfTwo'),
-        Crf(show_order=30, app_label='example', model_name='CrfThree'),
-        Crf(show_order=40, app_label='example', model_name='CrfFour'),
-        Crf(show_order=50, app_label='example', model_name='CrfFive'),
+        Crf(show_order=10, model='example.crfone'),
+        Crf(show_order=20, model='example.crftwo'),
+        Crf(show_order=30, model='example.crfthree'),
+        Crf(show_order=40, model='example.crffour'),
+        Crf(show_order=50, model='example.crffive'),
     )
     
     requisitions = (
