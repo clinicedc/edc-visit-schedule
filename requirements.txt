@@ -2,7 +2,7 @@ Django
 git+https://github.com/erikvw/django-revision@develop#egg=django_revision
 git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
 git+https://github.com/botswana-harvard/edc-content-type-map@develop#egg=edc_content_type_map
-git+https://github.com/botswana-harvard/edc-meta-data@develop#egg=edc_meta_data
+git+https://github.com/botswana-harvard/edc-meta-data@develop#egg=edc_metadata
 git+https://github.com/botswana-harvard/edc-rule-groups@develop#egg=edc_rule_groups
 git+https://github.com/botswana-harvard/edc-visit-tracking@develop#egg=edc_visit_tracking
 git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
