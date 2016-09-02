@@ -38,10 +38,10 @@ Next, declare lists of `Crfs` and `Requisitions` to be completed during each vis
     
     requisitions = (
         Requisition(
-            show_order=10, app_label='example', model_name='RequisitionOne',
+            show_order=10, app_label='example', model_name='SubjectRequisition',
             panel_name='Research Blood Draw', panel_type='TEST', aliqout_type_alpha_code='WB'),
         Requisition(
-            show_order=20, app_label='example', model_name='RequisitionTwo',
+            show_order=20, app_label='example', model_name='SubjectRequisition',
             panel_name='Viral Load', panel_type='TEST', aliqout_type_alpha_code='WB'),
     )
 
