@@ -1,6 +1,6 @@
 # edc-visit-schedule
 
-Add a data collection schedule to your app.
+Add data collection schedules to your app.
 
 ###Installation
 
