@@ -49,7 +49,7 @@ Next, declare lists of `Crfs` and `Requisitions` to be completed during each vis
 
 Create a schedule:
 
-    schedule = Schedule(name='schedule-1')
+    schedule = Schedule(name='schedule1')
 
 Add visits to the `schedule`:
 
@@ -104,7 +104,7 @@ For example:
         is_eligible = models.BooleanField(default=True)
     
         class Meta(EnrollmentModelMixin.Meta):
-            visit_schedule_name = 'subject_visit_schedule'
+            visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'edc_example.subjectconsent'
             app_label = 'edc_example'
     
@@ -112,7 +112,7 @@ For example:
     class Disenrollment(DisenrollmentModelMixin, RequiresConsentMixin, BaseUuidModel):
     
         class Meta(DisenrollmentModelMixin.Meta):
-            visit_schedule_name = 'subject_visit_schedule'
+            visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'edc_example.subjectconsent'
             app_label = 'edc_example'
 
