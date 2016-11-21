@@ -74,8 +74,8 @@ Then create a new visit schedule:
         name='subject_visit_schedule',
         verbose_name='Example Visit Schedule',
         app_label='example',
-        enrollment_model=Enrollment,
-        disenrollment=Disenrollment,
+        default_enrollment_model=Enrollment,
+        default_disenrollment=Disenrollment,
         death_report_model=SubjectDeathReport,
         offstudy_model=SubjectOffstudy,
         visit_model=SubjectVisit,
@@ -95,7 +95,7 @@ Note that the `schedule` above was declared with the enrollment model `Enrollmen
 
 ### Enrollment and Disenrollment models
 
-Two models_mixins are available for the the enrollment and disenrollment models, `EnrollmentModelMixin` and `DisenrollmentModelMixin`. Enrollment/disenrollment models may be used for only one `visit_schedule`. The `visit_schedule_name` is declared in the model's `Meta` class. Each schedule contained in the `visit_schedule` uses the same enrollment/disenrollment models. The schedule name is saved with the model instance to make it possible to differentiate between enrollment/disenrollment to each schedule.  
+Two models_mixins are available for the the enrollment and disenrollment models, `EnrollmentModelMixin` and `DisenrollmentModelMixin`. Enrollment/disenrollment models may be used for all schedules in a `visit_schedule`. The `visit_schedule_name` is declared in the model's `Meta` class. In the example, each schedule contained in the `visit_schedule` uses the same enrollment/disenrollment models. The schedule name is saved with the model instance to make it possible to differentiate between enrollment/disenrollment to each schedule.
 
 For example:
 
@@ -115,6 +115,18 @@ For example:
             visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'edc_example.subjectconsent'
             app_label = 'edc_example'
+
+It is possible to declare schedule specific enrollment/disenrollment models on the `Schedule`. In this case, the above example is the same with the exception of the `Schedule`:
+
+    schedule = Schedule(name='schedule1', enrollment_model='edc_example.enrollmenttwo')
+    
+If the enrollment model `EnrollmentTwo` will only be used for `Schedule` 'schedule1', say so on the Meta:
+
+    class EnrollmentTwo( ... ):
+        ...
+        class Meta:
+            ...
+            visit_schedule_name = 'subject_visit_schedule.schedule1'
 
 
 ### Off study vs. Disenrolled from a schedule
