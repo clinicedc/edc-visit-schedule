@@ -4,6 +4,18 @@ Add data collection schedules to your app.
 
 ###Installation
 
+Get the latest version:
+
+    pip install git+https://github.com/botswana-harvard/edc-visit-schedule@develop#egg=edc_visit_schedule
+
+Add to settings:
+
+    INSTALLED_APPS = [
+        ...
+        'edc_visit_schedule.apps.AppConfig',
+        ...
+    ]
+
 
 ###Usage
 
