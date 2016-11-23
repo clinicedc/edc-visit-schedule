@@ -25,14 +25,14 @@ A `VisitSchedule` contains `Schedules` which contain `Visits` which contain `Crf
 
 A `schedule` is effectively a "data collection schedule" where each contained `visit` represents a data collection timepoint.
 
-A subject is enrolled to a `schedule` by an enrollment model and disenrolled by a disenrollment model. In the example below we use models `Enrollment` and `Disenrollment` to do this.
+A subject is enrolled to a `schedule` by the schedule's enrollment model and disenrolled by the schedule's disenrollment model. In the example below we use models `Enrollment` and `Disenrollment` to do this for schedule 'schedule1'.
 
 
-See the example app for the complete code.
+See the `edc_example.visit_schedules` and `edc_example.models` for additional sample code. 
 
-First, create a file `visit_schedules.py` in the root of your app where the code below will live.
+First, create a file `visit_schedules.py` in the root of your app where the visit schedule code below will live.
 
-Next, declare lists of `Crfs` and `Requisitions` to be completed during each visit. For simplicity, we assume that every visit has the same data collection requirement (not usually the case).
+Next, declare lists of data `Crfs` and laboratory `Requisitions` to be completed during each visit. For simplicity, we assume that every visit has the same data collection requirement (not usually the case).
 
     from example.models import SubjectVisit, Enrollment, Disenrollment, SubjectDeathReport, SubjectOffstudy
 
@@ -59,11 +59,25 @@ Next, declare lists of `Crfs` and `Requisitions` to be completed during each vis
             panel_name='Viral Load', panel_type='TEST', aliqout_type_alpha_code='WB'),
     )
 
-Create a schedule:
+Create a new visit schedule:
 
-    schedule = Schedule(name='schedule1')
+    subject_visit_schedule = VisitSchedule(
+        name='subject_visit_schedule',
+        verbose_name='Example Visit Schedule',
+        app_label='example',
+        death_report_model=SubjectDeathReport,
+        offstudy_model=SubjectOffstudy,
+        visit_model=SubjectVisit)
 
-Add visits to the `schedule`:
+
+Visit schedules contain `Schedules` so create a schedule:
+
+    schedule = Schedule(
+        name='schedule1',
+        enrollment_model='edc_example.enrollment',
+        disenrollment_model='edc_example.disenrollment')
+
+Schedules contains visits, so add visits to the `schedule`:
 
     schedule.add_visit(
         code='1000',
@@ -80,19 +94,6 @@ Add visits to the `schedule`:
         requisitions=requisitions,
         crfs=crfs)
 
-Then create a new visit schedule:
-
-    subject_visit_schedule = VisitSchedule(
-        name='subject_visit_schedule',
-        verbose_name='Example Visit Schedule',
-        app_label='example',
-        default_enrollment_model=Enrollment,
-        default_disenrollment=Disenrollment,
-        death_report_model=SubjectDeathReport,
-        offstudy_model=SubjectOffstudy,
-        visit_model=SubjectVisit,
-    )
-
 Add the schedule to your visit schedule:
 
     schedule = subject_visit_schedule.add_schedule(schedule)
@@ -103,11 +104,13 @@ Register the visit schedule with the site registry:
 
 When Django loads, the visit schedule class will be available in the global `site_visit_schedules`.
 
-Note that the `schedule` above was declared with the enrollment model `Enrollment`. An enrollment model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `enrollment.save()` the method `enrollment.create_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule.
+The `site_visit_schedules` has a number of methods to help query the visit schedule and some related data.
+
+The `schedule` above was declared with the enrollment model `Enrollment`. An enrollment model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `enrollment.save()` the method `enrollment.create_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule.
 
 ### Enrollment and Disenrollment models
 
-Two models_mixins are available for the the enrollment and disenrollment models, `EnrollmentModelMixin` and `DisenrollmentModelMixin`. Enrollment/disenrollment models may be used for all schedules in a `visit_schedule`. The `visit_schedule_name` is declared in the model's `Meta` class. In the example, each schedule contained in the `visit_schedule` uses the same enrollment/disenrollment models. The schedule name is saved with the model instance to make it possible to differentiate between enrollment/disenrollment to each schedule.
+Two models_mixins are available for the the enrollment and disenrollment models, `EnrollmentModelMixin` and `DisenrollmentModelMixin`. Enrollment/disenrollment are specific to a `schedule`. The visit schedule name and schedule name are declared on the model's `Meta` class `visit_schedule_name` attribute.
 
 For example:
 
@@ -127,18 +130,6 @@ For example:
             visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'edc_example.subjectconsent'
             app_label = 'edc_example'
-
-It is possible to declare schedule specific enrollment/disenrollment models on the `Schedule`. In this case, the above example is the same with the exception of the `Schedule`:
-
-    schedule = Schedule(name='schedule1', enrollment_model='edc_example.enrollmenttwo')
-    
-If the enrollment model `EnrollmentTwo` will only be used for `Schedule` 'schedule1', say so on the Meta:
-
-    class EnrollmentTwo( ... ):
-        ...
-        class Meta:
-            ...
-            visit_schedule_name = 'subject_visit_schedule.schedule1'
 
 
 ### Off study vs. Disenrolled from a schedule
