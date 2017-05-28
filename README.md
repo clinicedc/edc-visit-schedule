@@ -64,7 +64,6 @@ Create a new visit schedule:
     subject_visit_schedule = VisitSchedule(
         name='subject_visit_schedule',
         verbose_name='Example Visit Schedule',
-        app_label='example',
         death_report_model=SubjectDeathReport,
         offstudy_model=SubjectOffstudy,
         visit_model=SubjectVisit)
@@ -79,20 +78,25 @@ Visit schedules contain `Schedules` so create a schedule:
 
 Schedules contains visits, so add visits to the `schedule`:
 
-    schedule.add_visit(
+    visit0 = Visit(
         code='1000',
         title='Visit 1000',
         timepoint=0,
-        base_interval=0,
+        rbase=relativedelta(days=0),
         requisitions=requisitions,
         crfs=crfs)
-    schedule.add_visit(
+
+    visit1 = Visit(
         code='2000',
         title='Visit 2000',
         timepoint=1,
-        base_interval=1,
+        rbase=relativedelta(days=28),
         requisitions=requisitions,
         crfs=crfs)
+
+    schedule.add_visit(visit=visit0)
+    schedule.add_visit(visit=visit1)
+
 
 Add the schedule to your visit schedule:
 
