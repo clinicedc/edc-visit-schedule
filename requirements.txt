@@ -1,14 +1,9 @@
-Django
-git+https://github.com/erikvw/django-revision@develop#egg=django_revision
 git+https://github.com/botswana-harvard/edc-base@develop#egg=edc_base
-git+https://github.com/botswana-harvard/edc-content-type-map@develop#egg=edc_content_type_map
-git+https://github.com/botswana-harvard/edc-meta-data@develop#egg=edc_metadata
-git+https://github.com/botswana-harvard/edc-visit-tracking@develop#egg=edc_visit_tracking
-git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
-
-# for tests
-factory-boy
 git+https://github.com/erikvw/django-crypto-fields@develop#egg=django_crypto_fields
-git+https://github.com/botswana-harvard/edc-appointment@develop#egg=edc_appointment
-git+https://github.com/botswana-harvard/edc-registration@develop#egg=edc_registration
-git+https://github.com/botswana-harvard/edc-consent@develop#egg=edc_consent
+git+https://github.com/erikvw/django-revision@develop#egg=django_revision
+git+https://github.com/botswana-harvard/edc-metadata@develop#egg=edc-metadata
+git+https://github.com/botswana-harvard/edc-visit-tracking@develop#egg=edc-visit-tracking
+git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc-constants
+git+https://github.com/botswana-harvard/edc-appointment@develop#egg=edc-appointment
+git+https://github.com/botswana-harvard/edc-registration@develop#egg=edc-registration
+git+https://github.com/botswana-harvard/edc-consent@develop#egg=edc-consent
