@@ -2,7 +2,7 @@
 
 Add data collection schedules to your app.
 
-###Installation
+## Installation
 
 Get the latest version:
 
@@ -17,7 +17,7 @@ Add to settings:
     ]
 
 
-###Usage
+## Overview
 
 A `Visit Schedule` lives in your app in `visit_schedules.py`. Each app can declare and register one or more visit schedules in its `visit_schedules` module. Visit schedules are loaded when `autodiscover` is called from `AppConfig`.
 
@@ -27,8 +27,7 @@ A `schedule` is effectively a "data collection schedule" where each contained `v
 
 A subject is enrolled to a `schedule` by the schedule's enrollment model and disenrolled by the schedule's disenrollment model. In the example below we use models `Enrollment` and `Disenrollment` to do this for schedule 'schedule1'.
 
-
-See the `edc_example.visit_schedules` and `edc_example.models` for additional sample code. 
+## Usage
 
 First, create a file `visit_schedules.py` in the root of your app where the visit schedule code below will live.
 
@@ -37,12 +36,12 @@ Next, declare lists of data `Crfs` and laboratory `Requisitions` to be completed
     from example.models import SubjectVisit, Enrollment, Disenrollment, SubjectDeathReport, SubjectOffstudy
 
     from edc_visit_schedule.site_visit_schedules import site_visit_schedules
-    from edc_visit_schedule.visit_schedule import VisitSchedule
-    from edc_visit_schedule.visit import Crf, Requisition
     from edc_visit_schedule.schedule import Schedule
+    from edc_visit_schedule.visit import Crf, Requisition, FormsCollection
+    from edc_visit_schedule.visit_schedule import VisitSchedule
     
     
-    crfs = (
+    crfs = FormsCollection(
         Crf(show_order=10, model='example.crfone'),
         Crf(show_order=20, model='example.crftwo'),
         Crf(show_order=30, model='example.crfthree'),
@@ -50,13 +49,11 @@ Next, declare lists of data `Crfs` and laboratory `Requisitions` to be completed
         Crf(show_order=50, model='example.crffive'),
     )
     
-    requisitions = (
+    requisitions = FormsCollection(
         Requisition(
-            show_order=10, app_label='example', model_name='SubjectRequisition',
-            panel_name='Research Blood Draw', panel_type='TEST', aliqout_type_alpha_code='WB'),
+            show_order=10, model='SubjectRequisition', panel_name='Research Blood Draw'),
         Requisition(
-            show_order=20, app_label='example', model_name='SubjectRequisition',
-            panel_name='Viral Load', panel_type='TEST', aliqout_type_alpha_code='WB'),
+            show_order=20, model='SubjectRequisition', panel_name='Viral Load'),
     )
 
 Create a new visit schedule:
