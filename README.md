@@ -115,7 +115,7 @@ Two models_mixins are available for the the enrollment and disenrollment models,
 
 For example:
 
-    class Enrollment(EnrollmentModelMixin, CreateAppointmentsMixin, RequiresConsentMixin, BaseUuidModel):
+    class Enrollment(EnrollmentModelMixin, CreateAppointmentsMixin, RequiresConsentModelMixin, BaseUuidModel):
     
         is_eligible = models.BooleanField(default=True)
     
@@ -125,7 +125,7 @@ For example:
             app_label = 'edc_example'
     
     
-    class Disenrollment(DisenrollmentModelMixin, RequiresConsentMixin, BaseUuidModel):
+    class Disenrollment(DisenrollmentModelMixin, RequiresConsentModelMixin, BaseUuidModel):
     
         class Meta(DisenrollmentModelMixin.Meta):
             visit_schedule_name = 'subject_visit_schedule.schedule1'
