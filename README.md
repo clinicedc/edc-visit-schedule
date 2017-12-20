@@ -51,9 +51,9 @@ Next, declare lists of data `Crfs` and laboratory `Requisitions` to be completed
     
     requisitions = FormsCollection(
         Requisition(
-            show_order=10, model='SubjectRequisition', panel_name='Research Blood Draw'),
+            show_order=10, model='myapp.subjectrequisition', panel_name='Research Blood Draw'),
         Requisition(
-            show_order=20, model='SubjectRequisition', panel_name='Viral Load'),
+            show_order=20, model='myapp.subjectrequisition', panel_name='Viral Load'),
     )
 
 Create a new visit schedule:
@@ -73,7 +73,7 @@ Visit schedules contain `Schedules` so create a schedule:
         onschedule_model='myapp.onschedule',
         offschedule_model='myapp.offschedule')
 
-Schedules contains visits, so add visits to the `schedule`:
+Schedules contains visits, so decalre some visits and add to the `schedule`:
 
     visit0 = Visit(
         code='1000',
@@ -107,18 +107,16 @@ When Django loads, the visit schedule class will be available in the global `sit
 
 The `site_visit_schedules` has a number of methods to help query the visit schedule and some related data.
 
-The `schedule` above was declared with `onschedule_model=OnSchedule`. An on-schedule model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `onschedule.save()` the method `onschedule.create_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule.
+> __Note:__ The `schedule` above was declared with `onschedule_model=OnSchedule`. An on-schedule model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `onschedule.save()` the method `onschedule.create_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule. See also `edc_appointment`.
 
 ### OnSchedule and OffSchedule models
 
-Two models_mixins are available for the the on-schedule and off-schedule models, `OnScheduleModelMixin` and `OffScheduleModelMixin`. OnSchedule/OffSchedule are specific to a `schedule`. The visit schedule name and schedule name are declared on the model's `Meta` class `visit_schedule_name` attribute.
+Two models_mixins are available for the the on-schedule and off-schedule models, `OnScheduleModelMixin` and `OffScheduleModelMixin`. OnSchedule/OffSchedule models are specific to a `schedule`. The `visit_schedule_name` and `schedule_name` are declared on the model's `Meta` class attribute `visit_schedule_name`.
 
 For example:
 
     class OnSchedule(OnScheduleModelMixin, CreateAppointmentsMixin, RequiresConsentModelMixin, BaseUuidModel):
-    
-        is_eligible = models.BooleanField(default=True)
-    
+        
         class Meta(EnrollmentModelMixin.Meta):
             visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'myapp.subjectconsent'
