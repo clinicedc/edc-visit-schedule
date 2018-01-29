@@ -7,3 +7,4 @@ git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc-constants
 git+https://github.com/botswana-harvard/edc-appointment@develop#egg=edc-appointment
 git+https://github.com/botswana-harvard/edc-registration@develop#egg=edc-registration
 git+https://github.com/botswana-harvard/edc-consent@develop#egg=edc-consent
+git+https://github.com/botswana-harvard/edc-appointment@develop#egg=edc-appointment
