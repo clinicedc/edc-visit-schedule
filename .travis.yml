@@ -6,6 +6,10 @@ python:
 services:
 - mysql
 
+addons:
+  apt_packages:
+     - libcups2-dev
+
 branches:
   only:
   - develop
