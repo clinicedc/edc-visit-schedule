@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/clinicedc/edc-visit-schedule.svg?branch=develop)](https://travis-ci.org/clinicedc/edc-visit-schedule)
+[![Coverage Status](https://coveralls.io/repos/clinicedc/edc-visit-schedule/badge.svg)](https://coveralls.io/r/clinicedc/edc-visit-schedule)
+
+
 # edc-visit-schedule
 
 Add data collection schedules to your app.
