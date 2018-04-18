@@ -10,7 +10,7 @@ Add data collection schedules to your app.
 
 Get the latest version:
 
-    pip install git+https://github.com/botswana-harvard/edc-visit-schedule@develop#egg=edc_visit_schedule
+    pip install git+https://github.com/clinicedc/edc-visit-schedule@develop#egg=edc_visit_schedule
 
 Add to settings:
 
