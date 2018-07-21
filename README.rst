@@ -1,42 +1,41 @@
-[![Build Status](https://travis-ci.org/clinicedc/edc-visit-schedule.svg?branch=develop)](https://travis-ci.org/clinicedc/edc-visit-schedule)
-[![Coverage Status](https://coveralls.io/repos/clinicedc/edc-visit-schedule/badge.svg)](https://coveralls.io/r/clinicedc/edc-visit-schedule)
+|pypi| |travis| |coverage|
 
-
-# edc-visit-schedule
+edc-visit-schedule
+------------------
 
 Add data collection schedules to your app.
 
-## Installation
-
-Get the latest version:
-
-    pip install git+https://github.com/clinicedc/edc-visit-schedule@develop#egg=edc_visit_schedule
+Installation
+============
 
 Add to settings:
 
+.. code-block:: python
+    
     INSTALLED_APPS = [
         ...
         'edc_visit_schedule.apps.AppConfig',
         ...
     ]
 
+Overview
+========
 
-## Overview
+* A ``Visit Schedule`` lives in your app in ``visit_schedules.py``. Each app can declare and register one or more visit schedules in its ``visit_schedules`` module. Visit schedules are loaded when ``autodiscover`` is called from ``AppConfig``.
+* A ``VisitSchedule`` contains ``Schedules`` which contain ``Visits`` which contain ``Crfs`` and ``Requisitions``.
+* A ``schedule`` is effectively a "data collection schedule" where each contained ``visit`` represents a data collection timepoint.
+* A subject is put on a ``schedule`` by the schedule's ``onschedule`` model and taken off by the schedule's ``offschedule`` model. In the example below we use models ``OnSchedule`` and ``OffSchedule`` to do this for schedule ``schedule1``.
 
-A `Visit Schedule` lives in your app in `visit_schedules.py`. Each app can declare and register one or more visit schedules in its `visit_schedules` module. Visit schedules are loaded when `autodiscover` is called from `AppConfig`.
+Usage
+=====
 
-A `VisitSchedule` contains `Schedules` which contain `Visits` which contain `Crfs` and `Requisitions`.
+First, create a file ``visit_schedules.py`` in the root of your app where the visit schedule code below will live.
 
-A `schedule` is effectively a "data collection schedule" where each contained `visit` represents a data collection timepoint.
 
-A subject is put on a `schedule` by the schedule's `onschedule` model and taken off by the schedule's `offschedule` model. In the example below we use models `OnSchedule` and `OffSchedule` to do this for schedule `schedule1`.
+Next, declare lists of data ``Crfs`` and laboratory ``Requisitions`` to be completed during each visit. For simplicity, we assume that every visit has the same data collection requirement (not usually the case).
 
-## Usage
-
-First, create a file `visit_schedules.py` in the root of your app where the visit schedule code below will live.
-
-Next, declare lists of data `Crfs` and laboratory `Requisitions` to be completed during each visit. For simplicity, we assume that every visit has the same data collection requirement (not usually the case).
-
+.. code-block:: python
+    
     from myapp.models import SubjectVisit, OnSchedule, OffSchedule, SubjectDeathReport, SubjectOffstudy
 
     from edc_visit_schedule.site_visit_schedules import site_visit_schedules
@@ -62,6 +61,8 @@ Next, declare lists of data `Crfs` and laboratory `Requisitions` to be completed
 
 Create a new visit schedule:
 
+.. code-block:: python
+    
     subject_visit_schedule = VisitSchedule(
         name='subject_visit_schedule',
         verbose_name='My Visit Schedule',
@@ -70,15 +71,19 @@ Create a new visit schedule:
         visit_model=SubjectVisit)
 
 
-Visit schedules contain `Schedules` so create a schedule:
+Visit schedules contain ``Schedules`` so create a schedule:
 
+.. code-block:: python
+    
     schedule = Schedule(
         name='schedule1',
         onschedule_model='myapp.onschedule',
         offschedule_model='myapp.offschedule')
 
-Schedules contains visits, so decalre some visits and add to the `schedule`:
+Schedules contains visits, so decalre some visits and add to the ``schedule``:
 
+.. code-block:: python
+    
     visit0 = Visit(
         code='1000',
         title='Visit 1000',
@@ -101,24 +106,31 @@ Schedules contains visits, so decalre some visits and add to the `schedule`:
 
 Add the schedule to your visit schedule:
 
+.. code-block:: python
+    
     schedule = subject_visit_schedule.add_schedule(schedule)
 
 Register the visit schedule with the site registry:
 
+.. code-block:: python
+    
     site_visit_schedules.register(subject_visit_schedule)
 
-When Django loads, the visit schedule class will be available in the global `site_visit_schedules`.
+When Django loads, the visit schedule class will be available in the global ``site_visit_schedules``.
 
-The `site_visit_schedules` has a number of methods to help query the visit schedule and some related data.
+The ``site_visit_schedules`` has a number of methods to help query the visit schedule and some related data.
 
-> __Note:__ The `schedule` above was declared with `onschedule_model=OnSchedule`. An on-schedule model uses the `CreateAppointmentsMixin` from `edc_appointment`. On `onschedule.save()` the method `onschedule.create_appointments` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule. See also `edc_appointment`.
+ **Note:** The ``schedule`` above was declared with ``onschedule_model=OnSchedule``. An on-schedule model uses the ``CreateAppointmentsMixin`` from ``edc_appointment``. On ``onschedule.save()`` the method ``onschedule.create_appointments`` is called. This method uses the visit schedule information to create the appointments as per the visit data in the schedule. See also ``edc_appointment``.
 
-### OnSchedule and OffSchedule models
+OnSchedule and OffSchedule models
+=================================
 
-Two models_mixins are available for the the on-schedule and off-schedule models, `OnScheduleModelMixin` and `OffScheduleModelMixin`. OnSchedule/OffSchedule models are specific to a `schedule`. The `visit_schedule_name` and `schedule_name` are declared on the model's `Meta` class attribute `visit_schedule_name`.
+Two models_mixins are available for the the on-schedule and off-schedule models, ``OnScheduleModelMixin`` and ``OffScheduleModelMixin``. OnSchedule/OffSchedule models are specific to a ``schedule``. The ``visit_schedule_name`` and ``schedule_name`` are declared on the model's ``Meta`` class attribute ``visit_schedule_name``.
 
 For example:
 
+.. code-block:: python
+    
     class OnSchedule(OnScheduleModelMixin, CreateAppointmentsMixin, RequiresConsentModelMixin, BaseUuidModel):
         
         class Meta(EnrollmentModelMixin.Meta):
@@ -131,3 +143,13 @@ For example:
         class Meta(OffScheduleModelMixin.Meta):
             visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'myapp.subjectconsent'
+
+
+.. |pypi| image:: https://img.shields.io/pypi/v/edc-visit-schedule.svg
+    :target: https://pypi.python.org/pypi/edc-visit-schedule
+    
+.. |travis| image:: https://travis-ci.org/clinicedc/edc-visit-schedule.svg?branch=develop
+    :target: https://travis-ci.org/clinicedc/edc-visit-schedule
+    
+.. |coverage| image:: https://coveralls.io/repos/github/clinicedc/edc-visit-schedule/badge.svg?branch=develop
+    :target: https://coveralls.io/github/clinicedc/edc-visit-schedule?branch=develop
