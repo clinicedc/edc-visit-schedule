@@ -20,7 +20,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     url='https://github.com/clinicedc/edc-visit-schedule',
-    license='GPL license, see LICENCE',
+    license='GPL license, see LICENSE',
     description='.',
     long_description=README,
     zip_safe=False,
