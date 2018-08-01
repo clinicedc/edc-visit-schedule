@@ -1,23 +1,34 @@
 language: python
+
 python:
 - 3.6
-services:
-- mysql
+- 3.7
+
+dist: xenial
+
+sudo: true
+
 addons:
   apt_packages:
   - libcups2-dev
-branches:
-  only:
-  - develop
+
+services:
+- mysql
+
 install:
 - pip install --upgrade pip
-- pip install -r requirements.txt
 - pip install flake8
 - pip install coveralls
+- pip install mysqlclient
+- pip install -e .
+- pip install -q -r requirements.txt
+
 before_script:
-- flake8 edc_visit_schedule
-- mysql -e 'create database edc character set utf8;'
+  - flake8 edc_visit_schedule
+  - mysql -e 'create database edc character set utf8;'
+
 script:
-- coverage run --source=edc_visit_schedule manage.py test
+  - coverage run --source=edc_visit_schedule manage.py test
+
 after_success:
-- coveralls
+  - coveralls

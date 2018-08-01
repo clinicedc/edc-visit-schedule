@@ -1,4 +1,4 @@
-include AUTHORS CHANGES README LICENCE VERSION
+include AUTHORS CHANGES README LICENSE VERSION
 recursive-include edc_visit_schedule/templates *
 recursive-include edc_visit_schedule/static *
 recursive-exclude etc/*
