@@ -85,7 +85,6 @@ class TestModels(SiteTestCaseMixin, TestCase):
                 obj.subject_identifier, obj.visit_schedule_name, obj.schedule_name),
             obj)
 
-    @tag('1')
     def test_crf(self):
         """Assert can enter a CRF.
         """

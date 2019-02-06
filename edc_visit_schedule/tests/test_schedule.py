@@ -5,7 +5,6 @@ from edc_base.utils import get_utcnow
 
 from ..schedule import Schedule, AlreadyRegisteredVisit
 from ..schedule import ScheduleNameError
-from ..simple_model_validator import InvalidModel
 from ..visit import Visit
 from .models import OnSchedule, OffSchedule
 
