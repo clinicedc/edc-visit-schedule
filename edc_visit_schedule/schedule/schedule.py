@@ -1,6 +1,7 @@
 import re
 
 from django.core.management.color import color_style
+from edc_base import get_utcnow
 
 from ..site_visit_schedules import site_visit_schedules, SiteVisitScheduleError
 from ..subject_schedule import NotOnScheduleForDateError, NotOnScheduleError
@@ -121,7 +122,13 @@ class Schedule:
         self.subject.resave(subject_identifier=subject_identifier)
 
     def take_off_schedule(self, offschedule_model_obj=None,
-                          offschedule_datetime=None, subject_identifier=None):
+                          offschedule_datetime=None,
+                          subject_identifier=None):
+        if not offschedule_datetime:
+            try:
+                offschedule_datetime = offschedule_model_obj.offschedule_datetime
+            except AttributeError:
+                offschedule_datetime = get_utcnow()
         self.subject.take_off_schedule(
             offschedule_model_obj=offschedule_model_obj,
             subject_identifier=subject_identifier,

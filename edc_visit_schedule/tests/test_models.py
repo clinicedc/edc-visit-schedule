@@ -85,13 +85,15 @@ class TestModels(SiteTestCaseMixin, TestCase):
                 obj.subject_identifier, obj.visit_schedule_name, obj.schedule_name),
             obj)
 
+    @tag('1')
     def test_crf(self):
         """Assert can enter a CRF.
         """
         OnSchedule.objects.create(
             subject_identifier='1234',
             onschedule_datetime=datetime(2017, 12, 1, 0, 0, 0, 0, pytz.utc))
-        self.assertEqual(Appointment.objects.all().count(), 4)
+        appointments = Appointment.objects.all()
+        self.assertEqual(appointments.count(), 4)
         appointment = Appointment.objects.all().order_by('appt_datetime').first()
         subject_visit = SubjectVisit.objects.create(
             appointment=appointment,

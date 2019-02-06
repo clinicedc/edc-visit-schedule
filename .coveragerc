@@ -1,7 +1,4 @@
 [run]
-omit =
-    */wsgi.py
-    setup.py
-    manage.py
-    */migrations/*
-    venv/*
+include = edc_visit_schedule/*
+omit = edc_visit_schedule/tests/*
+branch = 1

@@ -169,7 +169,9 @@ class SubjectSchedule:
 
             # clear future appointments
             self.appointment_model_cls.objects.delete_for_subject_after_date(
-                subject_identifier, offschedule_datetime)
+                subject_identifier, offschedule_datetime,
+                visit_schedule_name=self.visit_schedule_name,
+                schedule_name=self.schedule_name)
 
     def _update_history_or_raise(self, history_obj=None, subject_identifier=None,
                                  offschedule_datetime=None):
