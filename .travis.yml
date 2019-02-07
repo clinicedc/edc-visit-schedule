@@ -16,7 +16,7 @@ services:
 
 install:
 - pip install --upgrade pip
-- pip install flake8 coverage tox-travis
+- pip install flake8 coverage codecov tox-travis
 
 before_script:
 - flake8 edc_visit_schedule
@@ -34,5 +34,5 @@ matrix:
       env: TOXENV=py37-django21
     - python: 3.7
       env: TOXENV=py37-django22
-    - python: 3.7
-      env: TOXENV=py37-djangotrunk
+;    - python: 3.7
+;      env: TOXENV=py37-djangotrunk
