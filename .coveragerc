@@ -1,4 +1,4 @@
 [run]
 include = edc_visit_schedule/*
-omit = edc_visit_schedule/tests/*
+omit = edc_visit_schedule/tests/*,edc_visit_schedule/migrations/*,edc_visit_schedule/wsgi.py
 branch = 1
