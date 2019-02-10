@@ -1,4 +1,4 @@
-|pypi| |travis| |coverage|
+|pypi| |travis| |codecov| |downloads|
 
 edc-visit-schedule
 ------------------
@@ -151,5 +151,8 @@ For example:
 .. |travis| image:: https://travis-ci.org/clinicedc/edc-visit-schedule.svg?branch=develop
     :target: https://travis-ci.org/clinicedc/edc-visit-schedule
     
-.. |coverage| image:: https://coveralls.io/repos/github/clinicedc/edc-visit-schedule/badge.svg?branch=develop
-    :target: https://coveralls.io/github/clinicedc/edc-visit-schedule?branch=develop
+.. |codecov| image:: https://codecov.io/gh/clinicedc/edc-visit-schedule/branch/develop/graph/badge.svg
+  :target: https://codecov.io/gh/clinicedc/edc-visit-schedule
+
+.. |downloads| image:: https://pepy.tech/badge/edc-visit-schedule
+   :target: https://pepy.tech/project/edc-visit-schedule
