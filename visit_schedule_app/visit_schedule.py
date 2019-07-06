@@ -1,12 +1,11 @@
-from ..schedule import Schedule
-from ..visit import FormsCollection, Crf, Visit
-from ..visit_schedule import VisitSchedule
-
+from edc_visit_schedule.schedule import Schedule
+from edc_visit_schedule.visit import FormsCollection, Crf, Visit
+from edc_visit_schedule.visit_schedule import VisitSchedule
 from dateutil.relativedelta import relativedelta
 
 
 crfs = FormsCollection(
-    Crf(show_order=1, model=f"edc_visit_tracking.crfone", required=True)
+    Crf(show_order=1, model=f"visit_schedule_app.crfone", required=True)
 )
 
 
@@ -56,10 +55,10 @@ visit3 = Visit(
 
 schedule = Schedule(
     name="schedule",
-    onschedule_model="edc_visit_schedule.onschedule",
-    offschedule_model="edc_visit_schedule.offschedule",
+    onschedule_model="visit_schedule_app.onschedule",
+    offschedule_model="visit_schedule_app.offschedule",
     appointment_model="edc_appointment.appointment",
-    consent_model="edc_visit_schedule.subjectconsent",
+    consent_model="visit_schedule_app.subjectconsent",
 )
 
 schedule.add_visit(visit0)
@@ -69,8 +68,8 @@ schedule.add_visit(visit3)
 
 visit_schedule = VisitSchedule(
     name="visit_schedule",
-    offstudy_model="edc_visit_schedule.subjectoffstudy",
-    death_report_model="edc_visit_schedule.deathreport",
+    offstudy_model="visit_schedule_app.subjectoffstudy",
+    death_report_model="visit_schedule_app.deathreport",
 )
 
 visit_schedule.add_schedule(schedule)
@@ -79,17 +78,17 @@ visit_schedule.add_schedule(schedule)
 # visit_schedule2
 schedule2 = Schedule(
     name="schedule2",
-    onschedule_model="edc_visit_schedule.onschedule2",
-    offschedule_model="edc_visit_schedule.offschedule2",
+    onschedule_model="visit_schedule_app.onschedule2",
+    offschedule_model="visit_schedule_app.offschedule2",
     appointment_model="edc_appointment.appointment",
-    consent_model="edc_visit_schedule.subjectconsent",
+    consent_model="visit_schedule_app.subjectconsent",
 )
 
 schedule2.add_visit(visit3)
 visit_schedule2 = VisitSchedule(
     name="visit_schedule2",
-    offstudy_model="edc_visit_schedule.subjectoffstudy2",
-    death_report_model="edc_visit_schedule.deathreport",
+    offstudy_model="visit_schedule_app.subjectoffstudy2",
+    death_report_model="visit_schedule_app.deathreport",
 )
 
 visit_schedule2.add_schedule(schedule2)
@@ -97,17 +96,17 @@ visit_schedule2.add_schedule(schedule2)
 # visit_schedule5
 schedule5 = Schedule(
     name="schedule5",
-    onschedule_model="edc_visit_schedule.onschedulefive",
-    offschedule_model="edc_visit_schedule.offschedulefive",
+    onschedule_model="visit_schedule_app.onschedulefive",
+    offschedule_model="visit_schedule_app.offschedulefive",
     appointment_model="edc_appointment.appointment",
-    consent_model="edc_visit_schedule.subjectconsent",
+    consent_model="visit_schedule_app.subjectconsent",
 )
 
 schedule5.add_visit(visit0)
 visit_schedule5 = VisitSchedule(
     name="visit_schedule5",
-    offstudy_model="edc_visit_schedule.subjectoffstudyfive",
-    death_report_model="edc_visit_schedule.deathreport",
+    offstudy_model="visit_schedule_app.subjectoffstudyfive",
+    death_report_model="visit_schedule_app.deathreport",
 )
 
 visit_schedule5.add_schedule(schedule5)
@@ -116,17 +115,17 @@ visit_schedule5.add_schedule(schedule5)
 # visit_schedule6
 schedule6 = Schedule(
     name="schedule6",
-    onschedule_model="edc_visit_schedule.onschedulesix",
-    offschedule_model="edc_visit_schedule.offschedulesix",
+    onschedule_model="visit_schedule_app.onschedulesix",
+    offschedule_model="visit_schedule_app.offschedulesix",
     appointment_model="edc_appointment.appointment",
-    consent_model="edc_visit_schedule.subjectconsent",
+    consent_model="visit_schedule_app.subjectconsent",
 )
 
 schedule6.add_visit(visit0)
 visit_schedule6 = VisitSchedule(
     name="visit_schedule6",
-    offstudy_model="edc_visit_schedule.subjectoffstudysix",
-    death_report_model="edc_visit_schedule.deathreport",
+    offstudy_model="visit_schedule_app.subjectoffstudysix",
+    death_report_model="visit_schedule_app.deathreport",
 )
 
 visit_schedule6.add_schedule(schedule6)
@@ -134,17 +133,17 @@ visit_schedule6.add_schedule(schedule6)
 # visit_schedule7
 schedule7 = Schedule(
     name="schedule7",
-    onschedule_model="edc_visit_schedule.onscheduleseven",
-    offschedule_model="edc_visit_schedule.offscheduleseven",
+    onschedule_model="visit_schedule_app.onscheduleseven",
+    offschedule_model="visit_schedule_app.offscheduleseven",
     appointment_model="edc_appointment.appointment",
-    consent_model="edc_visit_schedule.subjectconsent",
+    consent_model="visit_schedule_app.subjectconsent",
 )
 
 schedule7.add_visit(visit0)
 visit_schedule7 = VisitSchedule(
     name="visit_schedule7",
-    offstudy_model="edc_visit_schedule.subjectoffstudyseven",
-    death_report_model="edc_visit_schedule.deathreport",
+    offstudy_model="visit_schedule_app.subjectoffstudyseven",
+    death_report_model="visit_schedule_app.deathreport",
 )
 
 visit_schedule7.add_schedule(schedule7)
