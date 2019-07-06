@@ -7,10 +7,9 @@ from edc_model.models import BaseUuidModel
 from edc_offstudy.model_mixins import OffstudyModelMixin, OffstudyModelManager
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_utils import get_utcnow
+from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
+from edc_visit_schedule.model_mixins import SubjectScheduleCrfModelMixin
 from edc_visit_tracking.model_mixins import CrfModelMixin, VisitModelMixin
-
-from ..model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
-from ..model_mixins import SubjectScheduleCrfModelMixin
 
 
 class SubjectVisit(VisitModelMixin, BaseUuidModel):

@@ -39,6 +39,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         'edc_visit_schedule.apps.EdcFacilityAppConfig',
         "edc_visit_schedule.apps.EdcProtocolAppConfig",
         'edc_visit_schedule.apps.AppConfig',
+        'visit_schedule_app.apps.AppConfig',
     ],
     add_dashboard_middleware=True,
 ).settings
