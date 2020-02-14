@@ -9,7 +9,6 @@ from django.test.runner import DiscoverRunner
 from edc_test_utils import DefaultTestSettings
 from os.path import abspath, dirname
 
-
 app_name = 'edc_visit_schedule'
 base_dir = dirname(abspath(__file__))
 
@@ -28,6 +27,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         'django.contrib.sites',
         'django_crypto_fields.apps.AppConfig',
         'django_revision.apps.AppConfig',
+        'edc_appointment.apps.AppConfig',
         'edc_registration.apps.AppConfig',
         'edc_device.apps.AppConfig',
         'edc_identifier.apps.AppConfig',
@@ -36,7 +36,6 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         'edc_metadata.apps.AppConfig',
         'edc_sites.apps.AppConfig',
         'edc_visit_tracking.apps.AppConfig',
-        'edc_visit_schedule.apps.EdcAppointmentAppConfig',
         'edc_visit_schedule.apps.EdcFacilityAppConfig',
         "edc_visit_schedule.apps.EdcProtocolAppConfig",
         'edc_visit_schedule.apps.AppConfig',
