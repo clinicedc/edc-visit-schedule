@@ -32,6 +32,7 @@ setup(
     zip_safe=False,
     keywords='django visit schedule clinical research',
     install_requires=[
+        'arrow',
         'edc-appointment',
         'edc-identifier',
         'edc-model-admin',
