@@ -3,11 +3,9 @@ from edc_visit_schedule.visit import FormsCollection, Crf, Visit
 from edc_visit_schedule.visit_schedule import VisitSchedule
 from dateutil.relativedelta import relativedelta
 
-
 crfs = FormsCollection(
     Crf(show_order=1, model=f"visit_schedule_app.crfone", required=True)
 )
-
 
 visit0 = Visit(
     code="1000",
@@ -17,7 +15,6 @@ visit0 = Visit(
     rlower=relativedelta(days=0),
     rupper=relativedelta(days=6),
     crfs=crfs,
-    facility_name="default",
 )
 
 visit1 = Visit(
@@ -28,7 +25,6 @@ visit1 = Visit(
     rlower=relativedelta(days=0),
     rupper=relativedelta(days=6),
     crfs=crfs,
-    facility_name="default",
 )
 
 visit2 = Visit(
@@ -39,7 +35,6 @@ visit2 = Visit(
     rlower=relativedelta(days=0),
     rupper=relativedelta(days=6),
     crfs=crfs,
-    facility_name="default",
 )
 
 visit3 = Visit(
@@ -50,7 +45,6 @@ visit3 = Visit(
     rlower=relativedelta(days=0),
     rupper=relativedelta(days=6),
     crfs=crfs,
-    facility_name="default",
 )
 
 schedule = Schedule(
@@ -73,7 +67,6 @@ visit_schedule = VisitSchedule(
 )
 
 visit_schedule.add_schedule(schedule)
-
 
 # visit_schedule2
 schedule2 = Schedule(
@@ -110,7 +103,6 @@ visit_schedule5 = VisitSchedule(
 )
 
 visit_schedule5.add_schedule(schedule5)
-
 
 # visit_schedule6
 schedule6 = Schedule(
