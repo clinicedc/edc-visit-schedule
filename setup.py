@@ -10,11 +10,6 @@ with open(join(dirname(__file__), 'README.rst')) as readme:
 with open(join(dirname(__file__), 'VERSION')) as f:
     VERSION = f.read()
 
-tests_require = ['edc_test_utils']
-with open(join(dirname(abspath(__file__)), 'requirements.txt')) as f:
-    for line in f:
-        tests_require.append(line.strip())
-
 # allow setup.py to be run from any path
 os.chdir(normpath(join(abspath(__file__), os.pardir)))
 
@@ -31,12 +26,7 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords='django visit schedule clinical research',
-    install_requires=[
-        'arrow',
-        'edc-appointment',
-        'edc-identifier',
-        'edc-model-admin',
-        'edc-model-wrapper'],
+    install_requires=['arrow'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -49,6 +39,5 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     python_requires=">=3.7",
-    tests_require=tests_require,
     test_suite='runtests.main',
 )
