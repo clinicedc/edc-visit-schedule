@@ -8,8 +8,7 @@ from edc_offstudy.model_mixins import OffstudyModelMixin, OffstudyModelManager
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_utils import get_utcnow
 from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
-from edc_visit_schedule.model_mixins import SubjectScheduleCrfModelMixin
-from edc_visit_tracking.model_mixins import VisitTrackingModelMixin, VisitModelMixin
+from edc_visit_tracking.model_mixins import VisitTrackingCrfModelMixin, VisitModelMixin
 
 
 class SubjectVisit(VisitModelMixin, BaseUuidModel):
@@ -144,7 +143,7 @@ class OffScheduleSeven(OffScheduleModelMixin, BaseUuidModel):
         pass
 
 
-class CrfOne(SubjectScheduleCrfModelMixin, VisitTrackingModelMixin, BaseUuidModel):
+class CrfOne(VisitTrackingCrfModelMixin, BaseUuidModel):
     subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT)
 
     report_datetime = models.DateTimeField(default=get_utcnow)
