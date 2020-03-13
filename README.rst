@@ -148,8 +148,8 @@ For example:
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-visit-schedule.svg
     :target: https://pypi.python.org/pypi/edc-visit-schedule
     
-.. |travis| image:: https://travis-ci.org/clinicedc/edc-visit-schedule.svg?branch=develop
-    :target: https://travis-ci.org/clinicedc/edc-visit-schedule
+.. |travis| image:: https://travis-ci.com/clinicedc/edc-visit-schedule.svg?branch=develop
+    :target: https://travis-ci.com/clinicedc/edc-visit-schedule
     
 .. |codecov| image:: https://codecov.io/gh/clinicedc/edc-visit-schedule/branch/develop/graph/badge.svg
   :target: https://codecov.io/gh/clinicedc/edc-visit-schedule
