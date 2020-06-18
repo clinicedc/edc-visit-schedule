@@ -2,16 +2,28 @@ from datetime import date
 from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_appointment.models import Appointment
+from edc_consent.model_mixins import RequiresConsentFieldsModelMixin
+from edc_crf.model_mixins import CrfModelMixin
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
+from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 from edc_model.models import BaseUuidModel
 from edc_offstudy.model_mixins import OffstudyModelMixin, OffstudyModelManager
+from edc_reference.model_mixins import ReferenceModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_utils import get_utcnow
 from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
-from edc_visit_tracking.model_mixins import VisitTrackingCrfModelMixin, VisitModelMixin
+from edc_visit_tracking.model_mixins import VisitModelMixin
+from edc_sites.models import SiteModelMixin
 
 
-class SubjectVisit(VisitModelMixin, BaseUuidModel):
+class SubjectVisit(
+    VisitModelMixin,
+    ReferenceModelMixin,
+    CreatesMetadataModelMixin,
+    SiteModelMixin,
+    RequiresConsentFieldsModelMixin,
+    BaseUuidModel,
+):
     appointment = models.OneToOneField(Appointment, on_delete=PROTECT)
 
     subject_identifier = models.CharField(max_length=25, null=True)
@@ -143,7 +155,9 @@ class OffScheduleSeven(OffScheduleModelMixin, BaseUuidModel):
         pass
 
 
-class CrfOne(VisitTrackingCrfModelMixin, BaseUuidModel):
+# class CrfOne(VisitTrackingCrfModelMixin, BaseUuidModel):
+class CrfOne(CrfModelMixin, BaseUuidModel):
+
     subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT)
 
     report_datetime = models.DateTimeField(default=get_utcnow)
