@@ -1,4 +1,5 @@
 from datetime import date
+
 from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_appointment.models import Appointment
@@ -7,13 +8,14 @@ from edc_crf.model_mixins import CrfModelMixin
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 from edc_model.models import BaseUuidModel
-from edc_offstudy.model_mixins import OffstudyModelMixin, OffstudyModelManager
+from edc_offstudy.model_mixins import OffstudyModelManager, OffstudyModelMixin
 from edc_reference.model_mixins import ReferenceModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
-from edc_utils import get_utcnow
-from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
-from edc_visit_tracking.model_mixins import VisitModelMixin
 from edc_sites.models import SiteModelMixin
+from edc_utils import get_utcnow
+from edc_visit_tracking.model_mixins import VisitModelMixin
+
+from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
 
 
 class SubjectVisit(
@@ -148,8 +150,7 @@ class OnScheduleSeven(OnScheduleModelMixin, BaseUuidModel):
 
 
 class OffScheduleSeven(OffScheduleModelMixin, BaseUuidModel):
-    """Is Missing Meta.OffScheduleModelMixin
-    """
+    """Is Missing Meta.OffScheduleModelMixin"""
 
     class Meta:
         pass
