@@ -1,4 +1,4 @@
-|pypi| |travis| |codecov| |downloads|
+|pypi| |actions| |codecov| |downloads|
 
 edc-visit-schedule
 ------------------
@@ -11,7 +11,7 @@ Installation
 Add to settings:
 
 .. code-block:: python
-    
+
     INSTALLED_APPS = [
         ...
         'edc_visit_schedule.apps.AppConfig',
@@ -35,15 +35,15 @@ First, create a file ``visit_schedules.py`` in the root of your app where the vi
 Next, declare lists of data ``Crfs`` and laboratory ``Requisitions`` to be completed during each visit. For simplicity, we assume that every visit has the same data collection requirement (not usually the case).
 
 .. code-block:: python
-    
+
     from myapp.models import SubjectVisit, OnSchedule, OffSchedule, SubjectDeathReport, SubjectOffstudy
 
     from edc_visit_schedule.site_visit_schedules import site_visit_schedules
     from edc_visit_schedule.schedule import Schedule
     from edc_visit_schedule.visit import Crf, Requisition, FormsCollection
     from edc_visit_schedule.visit_schedule import VisitSchedule
-    
-    
+
+
     crfs = FormsCollection(
         Crf(show_order=10, model='myapp.crfone'),
         Crf(show_order=20, model='myapp.crftwo'),
@@ -51,7 +51,7 @@ Next, declare lists of data ``Crfs`` and laboratory ``Requisitions`` to be compl
         Crf(show_order=40, model='myapp.crffour'),
         Crf(show_order=50, model='myapp.crffive'),
     )
-    
+
     requisitions = FormsCollection(
         Requisition(
             show_order=10, model='myapp.subjectrequisition', panel_name='Research Blood Draw'),
@@ -62,7 +62,7 @@ Next, declare lists of data ``Crfs`` and laboratory ``Requisitions`` to be compl
 Create a new visit schedule:
 
 .. code-block:: python
-    
+
     subject_visit_schedule = VisitSchedule(
         name='subject_visit_schedule',
         verbose_name='My Visit Schedule',
@@ -74,7 +74,7 @@ Create a new visit schedule:
 Visit schedules contain ``Schedules`` so create a schedule:
 
 .. code-block:: python
-    
+
     schedule = Schedule(
         name='schedule1',
         onschedule_model='myapp.onschedule',
@@ -83,7 +83,7 @@ Visit schedules contain ``Schedules`` so create a schedule:
 Schedules contains visits, so decalre some visits and add to the ``schedule``:
 
 .. code-block:: python
-    
+
     visit0 = Visit(
         code='1000',
         title='Visit 1000',
@@ -107,13 +107,13 @@ Schedules contains visits, so decalre some visits and add to the ``schedule``:
 Add the schedule to your visit schedule:
 
 .. code-block:: python
-    
+
     schedule = subject_visit_schedule.add_schedule(schedule)
 
 Register the visit schedule with the site registry:
 
 .. code-block:: python
-    
+
     site_visit_schedules.register(subject_visit_schedule)
 
 When Django loads, the visit schedule class will be available in the global ``site_visit_schedules``.
@@ -130,16 +130,16 @@ Two models_mixins are available for the the on-schedule and off-schedule models,
 For example:
 
 .. code-block:: python
-    
+
     class OnSchedule(OnScheduleModelMixin, CreateAppointmentsMixin, RequiresConsentModelMixin, BaseUuidModel):
-        
+
         class Meta(EnrollmentModelMixin.Meta):
             visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'myapp.subjectconsent'
-    
-    
+
+
     class OffSchedule(OffScheduleModelMixin, RequiresConsentModelMixin, BaseUuidModel):
-    
+
         class Meta(OffScheduleModelMixin.Meta):
             visit_schedule_name = 'subject_visit_schedule.schedule1'
             consent_model = 'myapp.subjectconsent'
@@ -147,10 +147,10 @@ For example:
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-visit-schedule.svg
     :target: https://pypi.python.org/pypi/edc-visit-schedule
-    
-.. |travis| image:: https://travis-ci.com/clinicedc/edc-visit-schedule.svg?branch=develop
-    :target: https://travis-ci.com/clinicedc/edc-visit-schedule
-    
+
+.. |actions| image:: https://github.com/clinicedc/edc-visit-schedule/workflows/build/badge.svg?branch=develop
+  :target: https://github.com/clinicedc/edc-visit-schedule/actions?query=workflow:build
+
 .. |codecov| image:: https://codecov.io/gh/clinicedc/edc-visit-schedule/branch/develop/graph/badge.svg
   :target: https://codecov.io/gh/clinicedc/edc-visit-schedule
 

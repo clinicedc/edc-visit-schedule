@@ -1,11 +1,10 @@
-from edc_visit_schedule.schedule import Schedule
-from edc_visit_schedule.visit import FormsCollection, Crf, Visit
-from edc_visit_schedule.visit_schedule import VisitSchedule
 from dateutil.relativedelta import relativedelta
 
-crfs = FormsCollection(
-    Crf(show_order=1, model=f"visit_schedule_app.crfone", required=True)
-)
+from edc_visit_schedule.schedule import Schedule
+from edc_visit_schedule.visit import Crf, FormsCollection, Visit
+from edc_visit_schedule.visit_schedule import VisitSchedule
+
+crfs = FormsCollection(Crf(show_order=1, model=f"visit_schedule_app.crfone", required=True))
 
 visit0 = Visit(
     code="1000",
