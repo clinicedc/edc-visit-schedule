@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_appointment.models import Appointment
 from edc_consent.model_mixins import RequiresConsentFieldsModelMixin
-from edc_crf.model_mixins import CrfModelMixin
+from edc_crf.crf_model_mixin import CrfModelMixin
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 from edc_model.models import BaseUuidModel
