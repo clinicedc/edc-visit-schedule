@@ -26,7 +26,9 @@ class SubjectVisit(
     RequiresConsentFieldsModelMixin,
     BaseUuidModel,
 ):
-    appointment = models.OneToOneField(Appointment, on_delete=PROTECT)
+    appointment = models.OneToOneField(
+        Appointment, on_delete=PROTECT, related_name="test_visit_schedule_appointment"
+    )
 
     subject_identifier = models.CharField(max_length=25, null=True)
 
