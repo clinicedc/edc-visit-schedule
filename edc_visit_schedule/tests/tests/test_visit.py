@@ -117,6 +117,17 @@ class TestVisit(TestCase):
             Arrow.fromdatetime(datetime(2002, 1, 19, 23, 59), tzinfo="utc").datetime,
         )
 
+    @tag("100")
+    def test_in_window_period(self):
+        wp = WindowPeriod(rlower=relativedelta(weeks=1), rupper=relativedelta(weeks=6))
+        dt = Arrow.fromdatetime(datetime(2001, 12, 8), tzinfo="utc").datetime
+        too_early = wp.get_window(dt).lower - relativedelta(days=1)
+        too_late = wp.get_window(dt).upper + relativedelta(days=1)
+        just_right = wp.get_window(dt).upper - relativedelta(weeks=3)
+        self.assertFalse(wp.in_window(report_datetime=too_early, timepoint_datetime=dt))
+        self.assertFalse(wp.in_window(report_datetime=too_late, timepoint_datetime=dt))
+        self.assertTrue(wp.in_window(report_datetime=just_right, timepoint_datetime=dt))
+
     def test_good_codes(self):
         try:
             Visit(
@@ -126,7 +137,7 @@ class TestVisit(TestCase):
                 rupper=relativedelta(days=6),
                 timepoint=1,
             )
-        except (VisitCodeError) as e:
+        except VisitCodeError as e:
             self.fail(f"VisitError unexpectedly raised. Got {e}")
         try:
             Visit(

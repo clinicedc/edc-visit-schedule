@@ -35,7 +35,7 @@ class VisitSchedule(VisitScheduleMethodsModelMixin, edc_models.BaseUuidModel):
 
     def __str__(self):
         return (
-            f"{self.visit_code}@{self.timepoint}: {self.visit_title} "
+            f"{self.visit_code}: {self.visit_title} "
             f"({self.visit_schedule_name}.{self.schedule_name})"
         )
 

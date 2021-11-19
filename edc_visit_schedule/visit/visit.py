@@ -1,10 +1,14 @@
 import re
+from datetime import datetime
 from decimal import Decimal
+from typing import Optional, Union
 
 import arrow
+from dateutil.relativedelta import relativedelta
 from django.apps import apps as django_apps
 from django.conf import settings
 
+from .forms_collection import FormsCollection
 from .window_period import WindowPeriod
 
 
@@ -23,20 +27,22 @@ class VisitError(Exception):
 class VisitDate:
     window_period_cls = WindowPeriod
 
-    def __init__(self, rlower=None, rupper=None, visit_code=None):
+    def __init__(
+        self,
+        rlower: relativedelta,
+        rupper: relativedelta,
+    ):
         self._base = None
         self.lower = None
         self.upper = None
-        self._window = self.window_period_cls(
-            rlower=rlower, rupper=rupper, visit_code=visit_code
-        )
+        self._window = self.window_period_cls(rlower=rlower, rupper=rupper)
 
     @property
     def base(self):
         return self._base
 
     @base.setter
-    def base(self, dt=None):
+    def base(self, dt: Optional[datetime] = None):
         self._base = arrow.get(dt).to("utc").datetime
         window = self._window.get_window(dt=dt)
         self.lower = window.lower
@@ -49,20 +55,20 @@ class Visit:
 
     def __init__(
         self,
-        code=None,
-        timepoint=None,
-        rbase=None,
-        rlower=None,
-        rupper=None,
-        crfs=None,
-        requisitions=None,
-        crfs_unscheduled=None,
-        crfs_missed=None,
-        requisitions_unscheduled=None,
-        crfs_prn=None,
-        requisitions_prn=None,
-        title=None,
-        instructions=None,
+        code: str,
+        timepoint: float,
+        rbase: relativedelta,
+        rlower: relativedelta,
+        rupper: relativedelta,
+        title: str,
+        crfs: Optional[FormsCollection] = None,
+        requisitions: Optional[FormsCollection] = None,
+        crfs_unscheduled: Optional[FormsCollection] = None,
+        crfs_missed: Optional[FormsCollection] = None,
+        requisitions_unscheduled: Optional[FormsCollection] = None,
+        crfs_prn: Optional[FormsCollection] = None,
+        requisitions_prn: Optional[FormsCollection] = None,
+        instructions: Optional[str] = None,
         grouping=None,
         allow_unscheduled=None,
         facility_name=None,
@@ -87,7 +93,7 @@ class Visit:
             raise VisitCodeError(f"Invalid visit code. Got '{code}'")
         else:
             self.code = code  # unique
-        self.dates = self.visit_date_cls(rlower=rlower, rupper=rupper, visit_code=self.code)
+        self.dates = self.visit_date_cls(rlower=rlower, rupper=rupper)
         self.title = title or f"Visit {self.code}"
         self.name = self.code
         self.facility_name = facility_name or settings.EDC_FACILITY_DEFAULT_FACILITY_NAME
@@ -135,7 +141,7 @@ class Visit:
         requisitions = requisitions + [r for r in self.requisitions_prn if r.name not in names]
         return sorted(requisitions, key=lambda x: x.show_order)
 
-    def next_form(self, model=None, panel=None):
+    def next_form(self, model=None):
         """Returns the next required "form" or None."""
         next_form = None
         for index, form in enumerate(self.forms):
@@ -177,7 +183,7 @@ class Visit:
         return None
 
     @property
-    def timepoint_datetime(self):
+    def timepoint_datetime(self) -> datetime:
         return self.dates.base
 
     @timepoint_datetime.setter
@@ -186,19 +192,36 @@ class Visit:
 
     def check(self):
         warnings = []
-        try:
-            for crf in self.crfs:
+
+        for crf in self.crfs:
+            try:
                 django_apps.get_model(crf.model)
-            for crf in self.requisitions:
+            except LookupError as e:
+                warnings.append(f"{e} Got Visit {self.code} crf model={crf.model}.")
+        for crf in self.requisitions:
+            try:
                 django_apps.get_model(crf.model)
-            for crf in self.crfs_unscheduled:
+            except LookupError as e:
+                warnings.append(f"{e} Got Visit {self.code} requisitions model={crf.model}.")
+        for crf in self.crfs_unscheduled:
+            try:
                 django_apps.get_model(crf.model)
-            for crf in self.crfs_missed:
+            except LookupError as e:
+                warnings.append(
+                    f"{e} Got Visit {self.code} crfs_unscheduled model={crf.model}."
+                )
+        for crf in self.crfs_missed:
+            try:
                 django_apps.get_model(crf.model)
-            for crf in self.requisitions_unscheduled:
+            except LookupError as e:
+                warnings.append(f"{e} Got Visit {self.code} crfs_missed model={crf.model}.")
+        for crf in self.requisitions_unscheduled:
+            try:
                 django_apps.get_model(crf.model)
-        except LookupError as e:
-            warnings.append(f"{e} Got Visit {self.code} crf.model={crf.model}.")
+            except LookupError as e:
+                warnings.append(
+                    f"{e} Got Visit {self.code} requisitions_unscheduled model={crf.model}."
+                )
         return warnings
 
     def to_dict(self):
