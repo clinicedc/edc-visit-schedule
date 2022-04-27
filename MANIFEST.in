@@ -3,4 +3,3 @@ include MANIFEST.in
 include *.rst
 include *.txt
 recursive-include edc_visit_schedule/templates *
-recursive-include edc_visit_schedule/static *

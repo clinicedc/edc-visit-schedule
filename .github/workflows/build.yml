@@ -13,24 +13,12 @@ jobs:
         python-version: ['3.9']
         django-version: ['3.2']
 
-    services:
-
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_DATABASE: mysql
-          MYSQL_ROOT_PASSWORD: mysql
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
     - name: Install pycups and words dependency
       run: |
         sudo apt-get install libcups2-dev wamerican
 
     - uses: actions/checkout@v2
-
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -62,7 +50,7 @@ jobs:
       env:
         DJANGO: ${{ matrix.django-version }}
 
-    - name: Upload coverage
-      uses: codecov/codecov-action@v1
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
       with:
         name: Python ${{ matrix.python-version }}
