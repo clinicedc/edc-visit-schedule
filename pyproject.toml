@@ -34,6 +34,7 @@ legacy_tox_ini = """
 envlist =
     py{39,310}-dj{32,40,41,dev},
     lint
+
 isolated_build = true
 
 [gh-actions]
