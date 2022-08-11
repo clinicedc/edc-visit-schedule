@@ -74,6 +74,7 @@ schedule2 = Schedule(
     offschedule_model="visit_schedule_app.offschedule2",
     appointment_model="edc_appointment.appointment",
     consent_model="visit_schedule_app.subjectconsent",
+    base_timepoint=3,
 )
 
 schedule2.add_visit(visit3)
