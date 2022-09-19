@@ -3,7 +3,8 @@
 edc-visit-schedule
 ------------------
 
-Add data collection schedules to your app.
+Add longitudinal data collection schedules to your EDC project.
+
 
 Installation
 ============
@@ -63,8 +64,8 @@ Create a new visit schedule:
 
 .. code-block:: python
 
-    subject_visit_schedule = VisitSchedule(
-        name='subject_visit_schedule',
+    visit_schedule = VisitSchedule(
+        name='visit_schedule',
         verbose_name='My Visit Schedule',
         death_report_model=SubjectDeathReport,
         offstudy_model=SubjectOffstudy,
@@ -76,11 +77,11 @@ Visit schedules contain ``Schedules`` so create a schedule:
 .. code-block:: python
 
     schedule = Schedule(
-        name='schedule1',
+        name='schedule',
         onschedule_model='myapp.onschedule',
         offschedule_model='myapp.offschedule')
 
-Schedules contains visits, so decalre some visits and add to the ``schedule``:
+Schedules contains visits, so declare some visits and add to the ``schedule``:
 
 .. code-block:: python
 
@@ -108,13 +109,13 @@ Add the schedule to your visit schedule:
 
 .. code-block:: python
 
-    schedule = subject_visit_schedule.add_schedule(schedule)
+    schedule = visit_schedule.add_schedule(schedule)
 
 Register the visit schedule with the site registry:
 
 .. code-block:: python
 
-    site_visit_schedules.register(subject_visit_schedule)
+    visit_schedules.register(visit_schedule)
 
 When Django loads, the visit schedule class will be available in the global ``site_visit_schedules``.
 
@@ -125,24 +126,33 @@ The ``site_visit_schedules`` has a number of methods to help query the visit sch
 OnSchedule and OffSchedule models
 =================================
 
-Two models_mixins are available for the the on-schedule and off-schedule models, ``OnScheduleModelMixin`` and ``OffScheduleModelMixin``. OnSchedule/OffSchedule models are specific to a ``schedule``. The ``visit_schedule_name`` and ``schedule_name`` are declared on the model's ``Meta`` class attribute ``visit_schedule_name``.
+Two models mixins are required for the the on-schedule and off-schedule models, ``OnScheduleModelMixin`` and ``OffScheduleModelMixin``. OnSchedule/OffSchedule models are specific to a ``schedule``. The ``visit_schedule_name`` and ``schedule_name`` are declared on the model's ``Meta`` class attribute ``visit_schedule_name``.
 
 For example:
 
 .. code-block:: python
 
-    class OnSchedule(OnScheduleModelMixin, CreateAppointmentsMixin, RequiresConsentModelMixin, BaseUuidModel):
+    class OnSchedule(OnScheduleModelMixin, BaseUuidModel):
 
-        class Meta(EnrollmentModelMixin.Meta):
-            visit_schedule_name = 'subject_visit_schedule.schedule1'
-            consent_model = 'myapp.subjectconsent'
+        """A model used by the system. Auto-completed by subject_consent."""
+
+        on_site = CurrentSiteManager()
+
+        objects = SubjectIdentifierManager()
+
+        history = HistoricalRecords()
+
+        class Meta(OnScheduleModelMixin.Meta, BaseUuidModel.Meta):
+            pass
 
 
-    class OffSchedule(OffScheduleModelMixin, RequiresConsentModelMixin, BaseUuidModel):
+    class OffSchedule(ActionModelMixin, OffScheduleModelMixin, BaseUuidModel):
 
-        class Meta(OffScheduleModelMixin.Meta):
-            visit_schedule_name = 'subject_visit_schedule.schedule1'
-            consent_model = 'myapp.subjectconsent'
+        action_name = OFFSCHEDULE_ACTION
+
+        class Meta(OffScheduleModelMixin.Meta, BaseUuidModel.Meta):
+            verbose_name = "Off-schedule"
+            verbose_name_plural = "Off-schedule"
 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-visit-schedule.svg
