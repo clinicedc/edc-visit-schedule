@@ -5,10 +5,11 @@ from django.db.models.deletion import PROTECT
 from edc_appointment.models import Appointment
 from edc_consent.model_mixins import RequiresConsentFieldsModelMixin
 from edc_crf.model_mixins import CrfModelMixin
+from edc_identifier.managers import SubjectIdentifierManager
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
 from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 from edc_model.models import BaseUuidModel
-from edc_offstudy.model_mixins import OffstudyModelManager, OffstudyModelMixin
+from edc_offstudy.model_mixins import OffstudyModelMixin
 from edc_reference.model_mixins import ReferenceModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_sites.models import SiteModelMixin
@@ -38,6 +39,7 @@ class SubjectVisit(
 
 
 class SubjectConsent(
+    SiteModelMixin,
     NonUniqueSubjectIdentifierFieldMixin,
     UpdatesOrCreatesRegistrationModelMixin,
     BaseUuidModel,
@@ -53,23 +55,23 @@ class SubjectConsent(
     dob = models.DateField(default=date(1995, 1, 1))
 
 
-class SubjectOffstudy(OffstudyModelMixin, BaseUuidModel):
-    objects = OffstudyModelManager()
+class SubjectOffstudy(SiteModelMixin, OffstudyModelMixin, BaseUuidModel):
+    objects = SubjectIdentifierManager()
 
 
-class SubjectOffstudyFive(OffstudyModelMixin, BaseUuidModel):
-    objects = OffstudyModelManager()
+class SubjectOffstudyFive(SiteModelMixin, OffstudyModelMixin, BaseUuidModel):
+    objects = SubjectIdentifierManager()
 
 
-class SubjectOffstudySix(OffstudyModelMixin, BaseUuidModel):
-    objects = OffstudyModelManager()
+class SubjectOffstudySix(SiteModelMixin, OffstudyModelMixin, BaseUuidModel):
+    objects = SubjectIdentifierManager()
 
 
-class SubjectOffstudySeven(OffstudyModelMixin, BaseUuidModel):
-    objects = OffstudyModelManager()
+class SubjectOffstudySeven(SiteModelMixin, OffstudyModelMixin, BaseUuidModel):
+    objects = SubjectIdentifierManager()
 
 
-class DeathReport(BaseUuidModel):
+class DeathReport(SiteModelMixin, BaseUuidModel):
     subject_identifier = models.CharField(max_length=25, null=True)
 
     report_datetime = models.DateTimeField()
@@ -78,20 +80,20 @@ class DeathReport(BaseUuidModel):
 # visit_schedule
 
 
-class OnSchedule(OnScheduleModelMixin, BaseUuidModel):
+class OnSchedule(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffSchedule(OffScheduleModelMixin, BaseUuidModel):
+class OffSchedule(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
     class Meta(OffScheduleModelMixin.Meta):
         pass
 
 
-class OnScheduleThree(OnScheduleModelMixin, BaseUuidModel):
+class OnScheduleThree(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffScheduleThree(OffScheduleModelMixin, BaseUuidModel):
+class OffScheduleThree(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
     class Meta(OffScheduleModelMixin.Meta):
         pass
 
@@ -99,27 +101,27 @@ class OffScheduleThree(OffScheduleModelMixin, BaseUuidModel):
 # visit_schedule_two
 
 
-class OnScheduleTwo(OnScheduleModelMixin, BaseUuidModel):
+class OnScheduleTwo(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffScheduleTwo(OffScheduleModelMixin, BaseUuidModel):
+class OffScheduleTwo(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OnScheduleFour(OnScheduleModelMixin, BaseUuidModel):
+class OnScheduleFour(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffScheduleFour(OffScheduleModelMixin, BaseUuidModel):
+class OffScheduleFour(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OnScheduleFive(OnScheduleModelMixin, BaseUuidModel):
+class OnScheduleFive(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffScheduleFive(OffScheduleModelMixin, BaseUuidModel):
+class OffScheduleFive(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
 
     offschedule_datetime_field_attr = "my_offschedule_datetime"
 
@@ -129,11 +131,11 @@ class OffScheduleFive(OffScheduleModelMixin, BaseUuidModel):
         pass
 
 
-class OnScheduleSix(OnScheduleModelMixin, BaseUuidModel):
+class OnScheduleSix(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffScheduleSix(OffScheduleModelMixin, BaseUuidModel):
+class OffScheduleSix(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
 
     offschedule_datetime_field_attr = "my_offschedule_date"
 
@@ -143,7 +145,7 @@ class OffScheduleSix(OffScheduleModelMixin, BaseUuidModel):
         pass
 
 
-class BadOffSchedule1(OffScheduleModelMixin, BaseUuidModel):
+class BadOffSchedule1(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
     """Meta.OffScheduleModelMixin.offschedule_datetime_field
     is None"""
 
@@ -155,11 +157,11 @@ class BadOffSchedule1(OffScheduleModelMixin, BaseUuidModel):
         pass
 
 
-class OnScheduleSeven(OnScheduleModelMixin, BaseUuidModel):
+class OnScheduleSeven(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
     pass
 
 
-class OffScheduleSeven(OffScheduleModelMixin, BaseUuidModel):
+class OffScheduleSeven(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
     """Is Missing Meta.OffScheduleModelMixin"""
 
     class Meta:
