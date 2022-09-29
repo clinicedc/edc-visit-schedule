@@ -120,10 +120,13 @@ class OnScheduleFive(OnScheduleModelMixin, BaseUuidModel):
 
 
 class OffScheduleFive(OffScheduleModelMixin, BaseUuidModel):
+
+    offschedule_datetime_field_attr = "my_offschedule_datetime"
+
     my_offschedule_datetime = models.DateTimeField()
 
     class Meta(OffScheduleModelMixin.Meta):
-        offschedule_datetime_field = "my_offschedule_datetime"
+        pass
 
 
 class OnScheduleSix(OnScheduleModelMixin, BaseUuidModel):
@@ -131,20 +134,25 @@ class OnScheduleSix(OnScheduleModelMixin, BaseUuidModel):
 
 
 class OffScheduleSix(OffScheduleModelMixin, BaseUuidModel):
+
+    offschedule_datetime_field_attr = "my_offschedule_date"
+
     my_offschedule_date = models.DateField()
 
     class Meta(OffScheduleModelMixin.Meta):
-        offschedule_datetime_field = "my_offschedule_date"
+        pass
 
 
 class BadOffSchedule1(OffScheduleModelMixin, BaseUuidModel):
     """Meta.OffScheduleModelMixin.offschedule_datetime_field
     is None"""
 
+    offschedule_datetime_field_attr = None
+
     my_offschedule_date = models.DateField()
 
     class Meta(OffScheduleModelMixin.Meta):
-        offschedule_datetime_field = None
+        pass
 
 
 class OnScheduleSeven(OnScheduleModelMixin, BaseUuidModel):
