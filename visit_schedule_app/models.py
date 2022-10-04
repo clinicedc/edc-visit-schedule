@@ -38,6 +38,18 @@ class SubjectVisit(
     reason = models.CharField(max_length=25, null=True)
 
 
+class SubjectScreening(
+    SiteModelMixin,
+    NonUniqueSubjectIdentifierFieldMixin,
+    BaseUuidModel,
+):
+    screening_identifier = models.CharField(max_length=50)
+
+    screening_datetime = models.DateTimeField(default=get_utcnow)
+
+    age_in_years = models.IntegerField(default=25)
+
+
 class SubjectConsent(
     SiteModelMixin,
     NonUniqueSubjectIdentifierFieldMixin,
