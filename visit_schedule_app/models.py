@@ -53,7 +53,6 @@ class SubjectVisitMissed(
     CrfWithActionModelMixin,
     BaseUuidModel,
 ):
-
     missed_reasons = models.ManyToManyField(
         SubjectVisitMissedReasons, blank=True, related_name="+"
     )
@@ -162,7 +161,6 @@ class OnScheduleFive(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
 
 
 class OffScheduleFive(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
-
     offschedule_datetime_field_attr = "my_offschedule_datetime"
 
     my_offschedule_datetime = models.DateTimeField()
@@ -176,7 +174,6 @@ class OnScheduleSix(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
 
 
 class OffScheduleSix(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
-
     offschedule_datetime_field_attr = "my_offschedule_date"
 
     my_offschedule_date = models.DateField()
@@ -209,7 +206,6 @@ class OffScheduleSeven(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
 
 
 class CrfOne(CrfModelMixin, BaseUuidModel):
-
     subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT)
 
     report_datetime = models.DateTimeField(default=get_utcnow)
