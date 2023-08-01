@@ -7,4 +7,4 @@ class AppConfig(DjangoAppConfig):
 
 
 class EdcMetadataAppConfig(BaseEdcMetadataAppConfig):
-    reason_field = {"visit_schedule_app.subjectvisit": "reason"}
+    reason_field = {"edc_visit_tracking.subjectvisit": "reason"}

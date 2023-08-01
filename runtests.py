@@ -18,7 +18,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     APP_NAME=app_name,
     ETC_DIR=os.path.join(base_dir, app_name, "tests", "etc"),
     EDC_NAVBAR_DEFAULT="edc_visit_schedule",
-    SUBJECT_VISIT_MODEL="visit_schedule_app.subjectvisit",
+    SUBJECT_VISIT_MODEL="edc_visit_tracking.subjectvisit",
     SUBJECT_SCREENING_MODEL="visit_schedule_app.subjectscreening",
     INSTALLED_APPS=[
         "django.contrib.admin",
