@@ -2,6 +2,7 @@ from datetime import date
 
 from django.db import models
 from django.db.models.deletion import PROTECT
+from edc_action_item.models import ActionItem
 from edc_crf.model_mixins import CrfModelMixin, CrfWithActionModelMixin
 from edc_identifier.managers import SubjectIdentifierManager
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
@@ -28,6 +29,14 @@ class SubjectVisitMissed(
     CrfWithActionModelMixin,
     BaseUuidModel,
 ):
+    action_item = models.ForeignKey(
+        ActionItem, null=True, blank=True, on_delete=PROTECT, related_name="+"
+    )
+
+    subject_visit = models.OneToOneField(
+        SubjectVisit, on_delete=models.PROTECT, related_name="+"
+    )
+
     missed_reasons = models.ManyToManyField(
         SubjectVisitMissedReasons, blank=True, related_name="+"
     )
@@ -181,7 +190,7 @@ class OffScheduleSeven(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
 
 
 class CrfOne(CrfModelMixin, BaseUuidModel):
-    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT)
+    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT, related_name="+")
 
     report_datetime = models.DateTimeField(default=get_utcnow)
 
