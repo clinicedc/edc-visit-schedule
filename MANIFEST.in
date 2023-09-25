@@ -2,3 +2,4 @@ include AUTHORS CHANGES LICENSE VERSION
 include MANIFEST.in
 include *.rst
 recursive-include edc_visit_schedule/templates *
+include */locale/*/LC_MESSAGES/*.mo
