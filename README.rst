@@ -41,11 +41,11 @@ Next, declare lists of data ``Crfs`` and laboratory ``Requisitions`` to be compl
 
     from edc_visit_schedule.site_visit_schedules import site_visit_schedules
     from edc_visit_schedule.schedule import Schedule
-    from edc_visit_schedule.visit import Crf, Requisition, FormsCollection
+    from edc_visit_schedule.visit import Crf, Requisition, CrfCollection, RequisitionCollection
     from edc_visit_schedule.visit_schedule import VisitSchedule
 
 
-    crfs = FormsCollection(
+    crfs = CrfCollection(
         Crf(show_order=10, model='myapp.crfone'),
         Crf(show_order=20, model='myapp.crftwo'),
         Crf(show_order=30, model='myapp.crfthree'),
@@ -53,7 +53,7 @@ Next, declare lists of data ``Crfs`` and laboratory ``Requisitions`` to be compl
         Crf(show_order=50, model='myapp.crffive'),
     )
 
-    requisitions = FormsCollection(
+    requisitions = RequisitionCollection(
         Requisition(
             show_order=10, model='myapp.subjectrequisition', panel_name='Research Blood Draw'),
         Requisition(
