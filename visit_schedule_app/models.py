@@ -199,3 +199,68 @@ class CrfOne(CrfModelMixin, BaseUuidModel):
     f2 = models.CharField(max_length=50, null=True, blank=True)
 
     f3 = models.CharField(max_length=50, null=True, blank=True)
+
+
+class CrfTwo(CrfModelMixin, BaseUuidModel):
+    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT, related_name="+")
+
+    report_datetime = models.DateTimeField(default=get_utcnow)
+
+    f1 = models.CharField(max_length=50, null=True, blank=True)
+
+
+class CrfThree(CrfModelMixin, BaseUuidModel):
+    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT, related_name="+")
+
+    report_datetime = models.DateTimeField(default=get_utcnow)
+
+    f1 = models.CharField(max_length=50, null=True, blank=True)
+
+
+class CrfOneProxyOne(CrfOne):
+    class Meta:
+        proxy = True
+
+
+class CrfOneProxyTwo(CrfOne):
+    class Meta:
+        proxy = True
+
+
+class CrfOneProxyThree(CrfOne):
+    class Meta:
+        proxy = True
+
+
+class CrfTwoProxyOne(CrfTwo):
+    class Meta:
+        proxy = True
+
+
+class CrfTwoProxyTwo(CrfTwo):
+    class Meta:
+        proxy = True
+
+
+class PrnOne(CrfModelMixin, BaseUuidModel):
+    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT, related_name="+")
+
+    report_datetime = models.DateTimeField(default=get_utcnow)
+
+    f1 = models.CharField(max_length=50, null=True, blank=True)
+
+
+class PrnTwo(CrfModelMixin, BaseUuidModel):
+    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT, related_name="+")
+
+    report_datetime = models.DateTimeField(default=get_utcnow)
+
+    f1 = models.CharField(max_length=50, null=True, blank=True)
+
+
+class PrnThree(CrfModelMixin, BaseUuidModel):
+    subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT, related_name="+")
+
+    report_datetime = models.DateTimeField(default=get_utcnow)
+
+    f1 = models.CharField(max_length=50, null=True, blank=True)

@@ -126,7 +126,7 @@ The ``site_visit_schedules`` has a number of methods to help query the visit sch
 OnSchedule and OffSchedule models
 =================================
 
-Two models mixins are required for the the on-schedule and off-schedule models, ``OnScheduleModelMixin`` and ``OffScheduleModelMixin``. OnSchedule/OffSchedule models are specific to a ``schedule``. The ``visit_schedule_name`` and ``schedule_name`` are declared on the model's ``Meta`` class attribute ``visit_schedule_name``.
+Two models mixins are required for the on-schedule and off-schedule models, ``OnScheduleModelMixin`` and ``OffScheduleModelMixin``. OnSchedule/OffSchedule models are specific to a ``schedule``. The ``visit_schedule_name`` and ``schedule_name`` are declared on the model's ``Meta`` class attribute ``visit_schedule_name``.
 
 For example:
 
