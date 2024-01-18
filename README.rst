@@ -68,8 +68,7 @@ Create a new visit schedule:
         name='visit_schedule',
         verbose_name='My Visit Schedule',
         death_report_model=SubjectDeathReport,
-        offstudy_model=SubjectOffstudy,
-        visit_model=SubjectVisit)
+        offstudy_model=SubjectOffstudy)
 
 
 Visit schedules contain ``Schedules`` so create a schedule:
@@ -79,7 +78,17 @@ Visit schedules contain ``Schedules`` so create a schedule:
     schedule = Schedule(
         name='schedule',
         onschedule_model='myapp.onschedule',
-        offschedule_model='myapp.offschedule')
+        offschedule_model='myapp.offschedule',
+        consent_definitions=[consent_definition_v1])
+
+About consent_definitions:
+    As you will see below, the ``schedule`` is a container for a data collection schedule of forms (CRFs and requisitions)
+    for a single study timepoint or ``visit``. Ethically, a subject's data may not be collected before the subject has signed and submitted the informed consent form (ICF).
+    ``Schedule`` is configured with information about the ICF that covers the forms it contains. When a form for a subject is validated and submitted, the ``Schedule`` will
+    provide the consent_definition (or definitions) so that the calling object can confirm the subject is consented. The ICF is represented by
+    the class ``ConsentDefinition`` from ``edc_consent``.
+
+    See also class ``ConsentDefinition`` in ``edc_consent``.
 
 Schedules contains visits, so declare some visits and add to the ``schedule``:
 
