@@ -1,10 +1,12 @@
 from dateutil.relativedelta import relativedelta
 
 from edc_visit_schedule.schedule import Schedule
-from edc_visit_schedule.visit import Crf, FormsCollection, Visit
+from edc_visit_schedule.visit import Crf, CrfCollection, Visit
 from edc_visit_schedule.visit_schedule import VisitSchedule
 
-crfs = FormsCollection(Crf(show_order=1, model="visit_schedule_app.crfone", required=True))
+from .consents import consent_v1
+
+crfs = CrfCollection(Crf(show_order=1, model="visit_schedule_app.crfone", required=True))
 
 visit0 = Visit(
     code="1000",
@@ -51,7 +53,7 @@ schedule = Schedule(
     onschedule_model="visit_schedule_app.onschedule",
     offschedule_model="visit_schedule_app.offschedule",
     appointment_model="edc_appointment.appointment",
-    consent_model="visit_schedule_app.subjectconsent",
+    consent_definitions=[consent_v1],
 )
 
 schedule.add_visit(visit0)
@@ -73,7 +75,7 @@ schedule2 = Schedule(
     onschedule_model="visit_schedule_app.onschedule2",
     offschedule_model="visit_schedule_app.offschedule2",
     appointment_model="edc_appointment.appointment",
-    consent_model="visit_schedule_app.subjectconsent",
+    consent_definitions=[consent_v1],
     base_timepoint=3,
 )
 
@@ -92,7 +94,7 @@ schedule5 = Schedule(
     onschedule_model="visit_schedule_app.onschedulefive",
     offschedule_model="visit_schedule_app.offschedulefive",
     appointment_model="edc_appointment.appointment",
-    consent_model="visit_schedule_app.subjectconsent",
+    consent_definitions=[consent_v1],
 )
 
 schedule5.add_visit(visit0)
@@ -110,7 +112,7 @@ schedule6 = Schedule(
     onschedule_model="visit_schedule_app.onschedulesix",
     offschedule_model="visit_schedule_app.offschedulesix",
     appointment_model="edc_appointment.appointment",
-    consent_model="visit_schedule_app.subjectconsent",
+    consent_definitions=[consent_v1],
 )
 
 schedule6.add_visit(visit0)
@@ -128,7 +130,7 @@ schedule7 = Schedule(
     onschedule_model="visit_schedule_app.onscheduleseven",
     offschedule_model="visit_schedule_app.offscheduleseven",
     appointment_model="edc_appointment.appointment",
-    consent_model="visit_schedule_app.subjectconsent",
+    consent_definitions=[consent_v1],
 )
 
 schedule7.add_visit(visit0)
