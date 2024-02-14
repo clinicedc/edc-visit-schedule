@@ -167,8 +167,8 @@ For example:
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-visit-schedule.svg
     :target: https://pypi.python.org/pypi/edc-visit-schedule
 
-.. |actions| image:: https://github.com/clinicedc/edc-visit-schedule/workflows/build/badge.svg?branch=develop
-  :target: https://github.com/clinicedc/edc-visit-schedule/actions?query=workflow:build
+.. |actions| image:: https://github.com/clinicedc/edc-visit-schedule/actions/workflows/build.yml/badge.svg
+  :target: https://github.com/clinicedc/edc-visit-schedule/actions/workflows/build.yml
 
 .. |codecov| image:: https://codecov.io/gh/clinicedc/edc-visit-schedule/branch/develop/graph/badge.svg
   :target: https://codecov.io/gh/clinicedc/edc-visit-schedule
