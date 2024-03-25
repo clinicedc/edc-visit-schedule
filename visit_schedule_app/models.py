@@ -3,6 +3,7 @@ from datetime import date
 from django.db import models
 from django.db.models.deletion import PROTECT
 from edc_action_item.models import ActionItem
+from edc_consent.managers import ConsentObjectsByCdefManager, CurrentSiteByCdefManager
 from edc_crf.model_mixins import CrfModelMixin, CrfWithActionModelMixin
 from edc_identifier.managers import SubjectIdentifierManager
 from edc_identifier.model_mixins import NonUniqueSubjectIdentifierFieldMixin
@@ -79,6 +80,9 @@ class SubjectConsent(
 
 
 class SubjectConsentV1(SubjectConsent):
+    on_site = CurrentSiteByCdefManager()
+    objects = ConsentObjectsByCdefManager()
+
     class Meta:
         proxy = True
 
