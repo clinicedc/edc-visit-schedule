@@ -1,6 +1,18 @@
 Changes
 =======
 
+4.0.2
+-----
+- remove Onschedule model post-save signal. The signal was calling put_onschedule.
+  This was a redundant call since it was put_onschedule() that created
+  the OnSchedule model instance in the first place.
+- Remove `resave` method on Schedule and SubjectSchedule. Replace with
+  Schedule.refresh_schedule which wraps SubjectSchedule.refresh_appointments.
+  SubjectSchedule.refresh_appointments now explicitly calls create_appointments.
+  That was the original intention of the now removed post_save signal.
+- add a manager method to OnSchedule to call put_onschedule (mostly for
+  tests)..
+
 0.3.18
 ------
 - add methods to `schedule` to list visits where CRFs and requisitions are required
