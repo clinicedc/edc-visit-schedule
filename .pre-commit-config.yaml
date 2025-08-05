@@ -20,10 +20,10 @@ repos:
     hooks:
       - id: flake8
         args:
-          - "--config=setup.cfg"
+          - "--config=.flake8"
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
+    rev: 6.0.1
     hooks:
       - id: isort
 
@@ -50,3 +50,9 @@ repos:
       - id: yamllint
         args:
           - "--strict"
+
+  - repo: https://github.com/rstcheck/rstcheck
+    rev: v6.2.5
+    hooks:
+      - id: rstcheck
+        additional_dependencies: ['rstcheck[sphinx,toml]']
