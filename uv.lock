@@ -1442,11 +1442,11 @@ test = [
 
 [[package]]
 name = "edc-visit-tracking"
-version = "1.0.3"
+version = "1.0.4"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/fe/7e/0e5f22806171b9e4fb66d0d7ad4373871a2d52c978551cbce287cd905894/edc_visit_tracking-1.0.3.tar.gz", hash = "sha256:80b3035f26232795317399b82fb2701285457d17e4a083111c9f3edb622a6181", size = 48470, upload-time = "2025-08-05T02:24:29.382Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3a/36/449e17ff2279dc4f86882850d0b34218afab6de4b01fec42314c988a411a/edc_visit_tracking-1.0.4.tar.gz", hash = "sha256:809e37f60457c1988408a80993843b41cad670ec2eb35ec346e8a47c0f643663", size = 48470, upload-time = "2025-08-05T02:42:50.373Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/83/a3/5ed23c42d18bbd75496e18d31e6dd38c47b13588d52b5ebe1a33bbcea4d6/edc_visit_tracking-1.0.3-py3-none-any.whl", hash = "sha256:c9c5492b2e8e4eb855091492c72d2e33713b83d86d3d038696d51053bb1375e6", size = 80262, upload-time = "2025-08-05T02:24:27.873Z" },
+    { url = "https://files.pythonhosted.org/packages/63/10/0253b4bb35beea68d81672a26a52c63fd8c22ba1ce42d5a6cc88881d4c47/edc_visit_tracking-1.0.4-py3-none-any.whl", hash = "sha256:34b0ce7a42d4ce52f62e238c2da4aa5fb5bcc66bda1b3e8c2ab7b62e80842b56", size = 80262, upload-time = "2025-08-05T02:42:48.841Z" },
 ]
 
 [[package]]
