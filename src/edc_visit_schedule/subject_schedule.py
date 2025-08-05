@@ -39,7 +39,7 @@ if TYPE_CHECKING:
     class RelatedVisitModel(SiteModelMixin, Base, BaseUuidModel):
         pass
 
-    class OnScheduleLikeModel(OnScheduleModelMixin): ...
+    class OnScheduleLikeModel(OnScheduleModelMixin): ...  # noqa
 
 
 class SubjectSchedule:

@@ -5,13 +5,15 @@ from pathlib import Path
 from edc_test_settings.default_test_settings import DefaultTestSettings
 
 app_name = "edc_visit_schedule"
-base_dir = Path(__file__).absolute().parent.parent.parent
+base_dir = Path(__file__).absolute().parent.parent
 
 project_settings = DefaultTestSettings(
     calling_file=__file__,
     BASE_DIR=base_dir,
     APP_NAME=app_name,
-    ETC_DIR=str(base_dir / app_name / "tests" / "etc"),
+    ETC_DIR=str(base_dir / "tests" / "etc"),
+    HOLIDAY_FILE=base_dir / "tests" / "holidays.csv",
+    DJANGO_REVISION_IGNORE_WORKING_DIR=True,
     SILENCED_SYSTEM_CHECKS=[
         "sites.E101",
         "edc_navbar.E002",
@@ -48,7 +50,7 @@ project_settings = DefaultTestSettings(
         "edc_registration.apps.AppConfig",
         "edc_sites.apps.AppConfig",
         "edc_adverse_event.apps.AppConfig",
-        "adverse_event_app.apps.AppConfig",
+        # "adverse_event_app.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
         "edc_review_dashboard.apps.AppConfig",
         "edc_subject_dashboard.apps.AppConfig",
